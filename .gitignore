@@ -1,0 +1,7 @@
+#用途：管理lichi项目
+#作者：Calm
+#时间：210808
+
+#.gitignore
+.vscode/
+__pycache__/
