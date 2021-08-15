@@ -103,7 +103,7 @@
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QPushButton" name="OpnSpBtn">
+         <widget class="QPushButton" name="OpnPtPb">
           <property name="text">
            <string>打开串口</string>
           </property>
@@ -231,7 +231,7 @@
        <enum>QFrame::Plain</enum>
       </property>
      </widget>
-     <widget class="QPlainTextEdit" name="plainTextEdit">
+     <widget class="QPlainTextEdit" name="SndPtb">
       <property name="geometry">
        <rect>
         <x>10</x>
