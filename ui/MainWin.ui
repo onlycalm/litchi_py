@@ -353,16 +353,16 @@ p, li { white-space: pre-wrap; }
      <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="HlpMen">
     <property name="title">
      <string>帮助</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="AbtAct"/>
    </widget>
-   <addaction name="menu"/>
+   <addaction name="HlpMen"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action">
+  <action name="AbtAct">
    <property name="text">
     <string>关于</string>
    </property>
