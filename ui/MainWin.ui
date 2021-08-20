@@ -51,17 +51,10 @@
          <x>10</x>
          <y>10</y>
          <width>121</width>
-         <height>181</height>
+         <height>182</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="GrdLyt">
-        <item row="4" column="0">
-         <widget class="QLabel" name="SbLbl">
-          <property name="text">
-           <string>停止位</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="PtLbl">
           <property name="text">
@@ -69,43 +62,10 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="FcLbl">
+        <item row="1" column="0" rowspan="2">
+         <widget class="QLabel" name="BrLbl">
           <property name="text">
-           <string>流控制</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QComboBox" name="FcCmb">
-          <item>
-           <property name="text">
-            <string>None</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Software</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Hardware</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="DbLbl">
-          <property name="text">
-           <string>数据位</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QPushButton" name="OpnPtPb">
-          <property name="text">
-           <string>打开串口</string>
+           <string>波特率</string>
           </property>
          </widget>
         </item>
@@ -128,16 +88,38 @@
           </item>
          </widget>
         </item>
-        <item row="1" column="1" rowspan="2">
-         <widget class="QComboBox" name="BrCmb">
+        <item row="7" column="0">
+         <widget class="QLabel" name="FcLbl">
+          <property name="text">
+           <string>流控制</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="PtCmb"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="SbLbl">
+          <property name="text">
+           <string>停止位</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QComboBox" name="FcCmb">
           <item>
            <property name="text">
-            <string>9600</string>
+            <string>None</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>115200</string>
+            <string>Software</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Hardware</string>
            </property>
           </item>
          </widget>
@@ -162,6 +144,34 @@
           <item>
            <property name="text">
             <string>5</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="5" column="0" rowspan="2">
+         <widget class="QLabel" name="ParLbl">
+          <property name="text">
+           <string>校验位</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="DbLbl">
+          <property name="text">
+           <string>数据位</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" rowspan="2">
+         <widget class="QComboBox" name="BrCmb">
+          <item>
+           <property name="text">
+            <string>9600</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>115200</string>
            </property>
           </item>
          </widget>
@@ -195,20 +205,21 @@
           </item>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="PtCmb"/>
-        </item>
-        <item row="1" column="0" rowspan="2">
-         <widget class="QLabel" name="BrLbl">
+        <item row="8" column="1">
+         <widget class="QPushButton" name="OpnPtPb">
           <property name="text">
-           <string>波特率</string>
+           <string>打开串口</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0" rowspan="2">
-         <widget class="QLabel" name="ParLbl">
+        <item row="8" column="0">
+         <widget class="QPushButton" name="RfrComPb">
           <property name="text">
-           <string>校验位</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/litchi.qrc">
+            <normaloff>:/refresh.png</normaloff>:/refresh.png</iconset>
           </property>
          </widget>
         </item>
@@ -368,6 +379,8 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res/litchi.qrc"/>
+ </resources>
  <connections/>
 </ui>

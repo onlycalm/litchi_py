@@ -1,5 +1,5 @@
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile, QIODevice
+from PySide2.QtCore import QFile, QIODevice, QDateTime
 from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog
 from PySide2.QtGui import QIcon
 
@@ -11,6 +11,7 @@ class cMainWin:
         MainWinUi.close()
 
         self.MainWin.AbtAct.triggered.connect(self.AbtAct)
+        self.MainWin.RfrComPb.clicked.connect(self.RfrCom)
         self.MainWin.OpnPtPb.clicked.connect(self.OpnPt)
         self.MainWin.SvRecvPb.clicked.connect(self.SvRecv)
         self.MainWin.ClrRecvPb.clicked.connect(self.ClrRecv)
@@ -25,13 +26,24 @@ class cMainWin:
         AbtMsgBx = QMessageBox()
         AbtMsgBx.about(self.MainWin, "关于", "内容")
 
+    def RfrCom(self):
+        print("RfrCom")
+
     def OpnPt(self):
         print("OpnPt")
+        self.MainWin.OpnPtPb.setStyleSheet("background-color:lightgreen")
+        self.MainWin.OpnPtPb.setText("关闭串口")
 
     def SvRecv(self):
         print("SvRecv")
+        Tm = QDateTime.currentDateTime()
+        FmtTm = Tm.toString('yyMMdd-hhmmss')
         FDlg = QFileDialog(self.MainWin)
-        QFileDialog.getSaveFileName(self.MainWin, "保存文件", "*.txt")
+        Fpth = FDlg.getSaveFileName(self.MainWin, "保存文件", FmtTm + ".txt")
+        if Fpth[0] != '':
+            F = open(Fpth[0], 'w')
+            F.write(self.MainWin.RecvTb.toPlainText());
+            F.close()
 
     def ClrRecv(self):
         print("ClrRecv")
