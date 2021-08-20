@@ -217,10 +217,6 @@
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset resource="../res/litchi.qrc">
-            <normaloff>:/refresh.png</normaloff>:/refresh.png</iconset>
-          </property>
          </widget>
         </item>
        </layout>
@@ -380,7 +376,7 @@ p, li { white-space: pre-wrap; }
   </action>
  </widget>
  <resources>
-  <include location="../res/litchi.qrc"/>
+  <include location="../res/res.qrc"/>
  </resources>
  <connections/>
 </ui>
