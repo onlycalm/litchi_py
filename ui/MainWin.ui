@@ -13,6 +13,13 @@
   <property name="windowTitle">
    <string>Lichi</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res/res.qrc">
+    <normaloff>:/Lg.png</normaloff>:/Lg.png</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
@@ -207,15 +214,32 @@
         </item>
         <item row="8" column="1">
          <widget class="QPushButton" name="OpnPtPb">
+          <property name="toolTip">
+           <string>打开/关闭串口</string>
+          </property>
           <property name="text">
-           <string>打开串口</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/res.qrc">
+            <normaloff>:/Conn.png</normaloff>:/Conn.png</iconset>
           </property>
          </widget>
         </item>
         <item row="8" column="0">
          <widget class="QPushButton" name="RfrComPb">
+          <property name="toolTip">
+           <string>刷新端口</string>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/res.qrc">
+            <normaloff>:/Rfr.png</normaloff>:/Rfr.png</iconset>
           </property>
          </widget>
         </item>
@@ -304,29 +328,57 @@ p, li { white-space: pre-wrap; }
        <layout class="QVBoxLayout" name="OprVertLyt">
         <item>
          <widget class="QPushButton" name="SvRecvPb">
-          <property name="text">
+          <property name="toolTip">
            <string>保存接收</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/res.qrc">
+            <normaloff>:/Sv.png</normaloff>:/Sv.png</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="ClrRecvPb">
-          <property name="text">
+          <property name="toolTip">
            <string>清空接收</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/res.qrc">
+            <normaloff>:/Cln.png</normaloff>:/Cln.png</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="ClrSndPb">
-          <property name="text">
+          <property name="toolTip">
            <string>清空发送</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/res.qrc">
+            <normaloff>:/Cln1.png</normaloff>:/Cln1.png</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="SndPb">
-          <property name="text">
+          <property name="toolTip">
            <string>发送</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/res.qrc">
+            <normaloff>:/Snd.png</normaloff>:/Snd.png</iconset>
           </property>
          </widget>
         </item>

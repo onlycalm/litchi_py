@@ -1,5 +1,11 @@
 <RCC>
 <qresource>
-    <file>./refresh.png</file>
+    <file>./Lg.png</file>
+    <file>./Conn.png</file>
+    <file>./Rfr.png</file>
+    <file>./Sv.png</file>
+    <file>./Cln.png</file>
+    <file>./Cln1.png</file>
+    <file>./Snd.png</file>
 </qresource>
 </RCC>

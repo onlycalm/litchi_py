@@ -4,7 +4,6 @@ from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog
 from PySide2.QtGui import QIcon
 from ser import cSer
 
-
 class cMainWin:
     def __init__(self):
         MainWinUi = QFile("ui/MainWin.ui")
@@ -39,8 +38,7 @@ class cMainWin:
     def ClkOpnPt(self):
         print("OpnPt")
         self.SwPtFrmCmb(False)
-        self.MainWin.OpnPtPb.setStyleSheet("background-color:lightgreen")
-        self.MainWin.OpnPtPb.setText("关闭串口")
+        self.MainWin.OpnPtPb.setStyleSheet("background-color:lightblue")
 
     def ClkSvRecv(self):
         print("SvRecv")
