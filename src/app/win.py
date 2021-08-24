@@ -1,5 +1,5 @@
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile, QIODevice, QDateTime
+from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer
 from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog
 from PySide2.QtGui import QIcon
 from ser import cSer
@@ -11,10 +11,12 @@ class cMainWin:
         self.MainWin = QUiLoader().load(MainWinUi)
         MainWinUi.close()
 
-        self.Ser = cSer()
+        self.SerDri = cSer()
+        self.Tmr = QTimer()
 
         self.RfrCom()
 
+        self.Tmr.timeout.connect(self.SerTmRecv)
         self.MainWin.AbtAct.triggered.connect(self.ClkAbtAct)
         self.MainWin.RfrComPb.clicked.connect(self.ClkRfrCom)
         self.MainWin.OpnPtPb.clicked.connect(self.ClkOpnPt)
@@ -25,6 +27,12 @@ class cMainWin:
 
     def show(self):
         self.MainWin.show()
+
+    def SerTmRecv(self):
+        RecvLen = self.SerDri.GetRecvCachLen()
+        if RecvLen > 0:
+            RecvTxt = self.SerDri.Recv(RecvLen)
+            self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
 
     def ClkAbtAct(self):
         print("About")
@@ -37,8 +45,31 @@ class cMainWin:
 
     def ClkOpnPt(self):
         print("OpnPt")
-        self.SwPtFrmCmb(False)
-        self.MainWin.OpnPtPb.setStyleSheet("background-color:lightblue")
+        if self.SerDri.Ser.is_open == False:
+            PtInfo = {"Port":self.MainWin.PtCmb.currentText(),
+                      "BaudRate":self.MainWin.BrCmb.currentText(),
+                      "ByteSize":self.MainWin.DbCmb.currentText(),
+                      "StopBits":self.MainWin.SbCmb.currentText(),
+                      "Parity":"None", "Timeout":None,
+                      "XOnXOff":False, "RtsCts":False, "Write_Timeout":None,
+                      "DsrDtr":False, "Inter_Byte_Timeout":None}
+            try:
+                self.SerDri.Opn(PtInfo)
+            except:
+                QMessageBox.critical(self.MainWin, "Error", "串口打开失败")
+            else:
+                self.Tmr.start(100)
+                self.SwPtFrmCmb(False)
+                self.MainWin.OpnPtPb.setStyleSheet("background-color:lightblue")
+        else:
+            try:
+                self.SerDri.Cl()
+            except:
+                QMessageBox.critical(self.MainWin, "Error", "串口打开失败")
+            else:
+                self.Tmr.stop()
+                self.SwPtFrmCmb(True)
+                self.MainWin.OpnPtPb.setStyleSheet("background-color:none")
 
     def ClkSvRecv(self):
         print("SvRecv")
@@ -61,9 +92,11 @@ class cMainWin:
 
     def ClkPtSnd(self):
         print("PtSnd")
+        if self.SerDri.Ser.is_open == True:
+            self.SerDri.Snd(self.MainWin.SndPtb.toPlainText().encode("Gbk"))
 
     def RfrCom(self):
-        ComLst = self.Ser.GetCom()
+        ComLst = self.SerDri.GetCom()
         if len(ComLst) != 0:
             ComLst.sort()
             self.MainWin.PtCmb.clear()
