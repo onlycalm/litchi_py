@@ -53,6 +53,7 @@ class cMainWin:
                       "Parity":"None", "Timeout":None,
                       "XOnXOff":False, "RtsCts":False, "Write_Timeout":None,
                       "DsrDtr":False, "Inter_Byte_Timeout":None}
+
             try:
                 self.SerDri.Opn(PtInfo)
             except:
@@ -98,7 +99,6 @@ class cMainWin:
     def RfrCom(self):
         ComLst = self.SerDri.GetCom()
         if len(ComLst) != 0:
-            ComLst.sort()
             self.MainWin.PtCmb.clear()
 
             for val in ComLst:

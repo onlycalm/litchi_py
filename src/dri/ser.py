@@ -22,6 +22,8 @@ class cSer:
             for i in range(len(SerLst)):
                 ComLst.append(SerLst[i].device)
 
+        ComLst = list(set(ComLst)) #删除重复元素
+        ComLst.sort()
         return ComLst
 
     def Opn(self, PtInfo):
