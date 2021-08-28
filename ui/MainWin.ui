@@ -31,7 +31,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="DiagAstTab">
      <attribute name="title">
@@ -395,6 +395,17 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>波形助手</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>821</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="GrphVl"/>
+     </widget>
     </widget>
     <widget class="QWidget" name="LogAstTab">
      <attribute name="title">

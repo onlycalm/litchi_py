@@ -3,6 +3,8 @@ from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer
 from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog
 from PySide2.QtGui import QIcon
 from ser import cSer
+from grph import cOsc
+from log import *
 
 class cMainWin:
     def __init__(self):
@@ -13,10 +15,14 @@ class cMainWin:
 
         self.SerDri = cSer()
         self.Tmr = QTimer()
+        self.Osc = cOsc()
+        self.OscPlt = self.Osc.Pw.plot()
+        self.OscPlt.setData([100, 200, 300])
 
         self.RfrCom()
 
         self.Tmr.timeout.connect(self.SerTmRecv)
+        self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.MainWin.AbtAct.triggered.connect(self.ClkAbtAct)
         self.MainWin.RfrComPb.clicked.connect(self.ClkRfrCom)
         self.MainWin.OpnPtPb.clicked.connect(self.ClkOpnPt)
