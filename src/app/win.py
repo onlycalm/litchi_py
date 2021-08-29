@@ -5,6 +5,7 @@ from PySide2.QtGui import QIcon
 from ser import cSer
 from grph import cOsc
 from log import *
+import numpy
 
 class cMainWin:
     def __init__(self):
@@ -16,13 +17,16 @@ class cMainWin:
         self.SerDri = cSer()
         self.Tmr = QTimer()
         self.Osc = cOsc()
-        self.OscPlt = self.Osc.Pw.plot()
-        self.OscPlt.setData([100, 200, 300])
+        self.Osc.AddLn("A1", "r", 1, "r")
+        self.Osc.AddLn("A2")
+        self.Osc.SetDat("A1", [100, 200, 300])
+        self.Osc.SetDat("A2", [100, 100, 100])
+        #self.Tmr.start(100)
 
         self.RfrCom()
+        self.MainWin.GrphVl.addWidget(self.Osc.Pw)
 
         self.Tmr.timeout.connect(self.SerTmRecv)
-        self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.MainWin.AbtAct.triggered.connect(self.ClkAbtAct)
         self.MainWin.RfrComPb.clicked.connect(self.ClkRfrCom)
         self.MainWin.OpnPtPb.clicked.connect(self.ClkOpnPt)
@@ -35,6 +39,9 @@ class cMainWin:
         self.MainWin.show()
 
     def SerTmRecv(self):
+        #Test
+        #self.Osc.ApdPt("A1", numpy.random.random() * 100)
+
         RecvLen = self.SerDri.GetRecvCachLen()
         if RecvLen > 0:
             RecvTxt = self.SerDri.Recv(RecvLen)

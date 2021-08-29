@@ -2,24 +2,53 @@ import pyqtgraph
 
 class cOsc:
     def __init__(self, Bg = "w", Fg = "k"):
+        self.Ln = {}
         pyqtgraph.setConfigOption("background", Bg)
         pyqtgraph.setConfigOption("foreground", Fg)
         self.Pw = pyqtgraph.PlotWidget(enableAutoRange = True)
-        self.LnAmt = 0
-        self.Ln = {}
 
-    def AddLn(self):
-        if self.LnAmt < 10:
-            self.LnAmt += 1
-            self.Ln[self.LnAmt] = self.Pw.plot()
+    def AddLn(self, Id, LnClr = "k", LnWd = 1, PtClr = "k"):
+        self.Ln[Id] = {}
+        self.Ln[Id]["LnClr"] = LnClr
+        self.Ln[Id]["LnWd"] = LnWd
+        self.Ln[Id]["PtClr"] = PtClr
+        self.Ln[Id]["Sw"] = True
+        self.Ln[Id]["Dat"] = []
+        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd), symbolBrush = PtClr)
 
-    def DelLn(self):
-        if self.LnAmt > 0:
-            self.LnAmt -= 1
+    def DelLn(self, Id):
+        self.Ln[Id]["Plt"].setData([])
+        del self.Ln[Id]
 
-    def ClrLn(self):
-        self.Ln = {}
-        self.LnAmt = 0
+    def ClrAllLn(self):
+        self.Ln.clear()
 
-    def SetDat(self, LnNum):
-        self.Ln[self.LnAmt].setData([100, 200, 300])
+    def SetDat(self, Id, Dat):
+        self.Ln[Id]["Dat"] = Dat
+        self.Ln[Id]["Plt"].setData(Dat)
+
+    def ApdPt(self, Id, Val):
+        self.Ln[Id]["Dat"].append(Val)
+        self.Ln[Id]["Plt"].setData(self.Ln[Id]["Dat"])
+
+    def SetLn(self, Id, LnClr = "k", LnWd = 1, PtClr = "k"):
+        self.Ln[Id]["LnClr"] = LnClr
+        self.Ln[Id]["LnWd"] = LnWd
+        self.Ln[Id]["PtClr"] = PtClr
+        self.Ln[Id]["Plt"].setData([])
+        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd), symbolBrush = PtClr)
+        self.Ln[Id]["Plt"].setData(self.Ln[Id]["Dat"])
+
+    def SwLn(self, Id, Sw):
+        self.Ln[Id]["Sw"] = Sw
+
+        if Sw == True:
+            self.Ln[Id]["Plt"].setData(self.Ln[Id]["Dat"])
+        else:
+            self.Ln[Id]["Plt"].setData([])
+
+    def SetGrid(self, SwX = False, SwY = False, Thk = 0.1):
+        self.Pw.showGrid(x = SwX, y = SwY, alpha = Thk)
+
+    def SetLbl(self, Ax, Str):
+        self.Pw.setLabel(axis = Ax, text = Str)
