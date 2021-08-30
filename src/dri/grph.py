@@ -14,7 +14,7 @@ class cOsc:
         self.Ln[Id]["PtClr"] = PtClr
         self.Ln[Id]["Sw"] = True
         self.Ln[Id]["Dat"] = []
-        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd), symbolBrush = PtClr)
+        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd), symbolBrush = PtClr, symbol = "o")
 
     def DelLn(self, Id):
         self.Ln[Id]["Plt"].setData([])
@@ -22,6 +22,7 @@ class cOsc:
 
     def ClrAllLn(self):
         self.Ln.clear()
+        self.Pw.clear()
 
     def SetDat(self, Id, Dat):
         self.Ln[Id]["Dat"] = Dat
