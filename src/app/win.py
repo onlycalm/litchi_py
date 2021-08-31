@@ -8,6 +8,14 @@ from log import *
 import numpy
 
 class cMainWin:
+    ##
+    # @brief 构造函数。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def __init__(self):
         MainWinUi = QFile("ui/MainWin.ui")
         MainWinUi.open(QIODevice.ReadOnly)
@@ -35,6 +43,14 @@ class cMainWin:
         self.MainWin.ClrSndPb.clicked.connect(self.ClkClrSnd)
         self.MainWin.SndPb.clicked.connect(self.ClkPtSnd)
 
+    ##
+    # @brief 显示窗口。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def show(self):
         self.MainWin.show()
 
