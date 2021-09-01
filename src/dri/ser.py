@@ -1,7 +1,32 @@
+##
+# @file ser.py
+# @brief 串口模块。
+# @details 无
+# @author Calm
+# @date 2021-09-01
+# @version v1.0.0
+# @copyright Calm
+#
+
 import serial
 import serial.tools.list_ports
 
+##
+# @class cSer
+# @brief 串口类。
+# @details 无
+# @note 无
+# @attention 无
+#
 class cSer:
+    ##
+    # @brief 构造函数。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def __init__(self):
         self.Ser = serial.Serial()
 
@@ -14,6 +39,14 @@ class cSer:
         self.ParDict = {"None":serial.PARITY_NONE, "Even":serial.PARITY_EVEN, "Odd":serial.PARITY_ODD, "Mark":serial.PARITY_MARK, "Space":serial.PARITY_SPACE}
         self.StpBitDict = {"1":serial.STOPBITS_ONE, "1.5":serial.STOPBITS_ONE_POINT_FIVE, "2":serial.STOPBITS_TWO}
 
+    ##
+    # @brief 获取Com口信息。
+    # @details 无
+    # @param self 对象指针。
+    # @return 类型为列表，为检测到的Com口。
+    # @note 无
+    # @attention 无
+    #
     def GetCom(self):
         SerLst = list(serial.tools.list_ports.comports())
         ComLst = []
@@ -26,6 +59,15 @@ class cSer:
         ComLst.sort()
         return ComLst
 
+    ##
+    # @brief 打开Com口。
+    # @details 无
+    # @param self 对象指针。
+    # @param PtInfo 类型为字典，含有Com口的配置参数。
+    # @return 无
+    # @note 带异常检测。
+    # @attention 无
+    #
     def Opn(self, PtInfo):
         self.Ser.port = PtInfo["Port"]
         self.Ser.baudrate = self.BrDict[PtInfo["BaudRate"]]
@@ -44,17 +86,52 @@ class cSer:
         except:
             raise
 
+    ##
+    # @brief 发送串口信息。
+    # @details 无
+    # @param self 对象指针。
+    # @param Txt 发送文本。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def Snd(self, Txt):
         self.Ser.write(Txt)
 
+    ##
+    # @brief 接收串口信息。
+    # @details 无
+    # @param self 对象指针。
+    # @param ByNum 从缓存中接收字节数。
+    # @return 类型为字符串，返回读取的指定字节数数据。
+    # @note 无
+    # @attention 无
+    #
     def Recv(self, ByNum):
         return self.Ser.read(ByNum)
 
+    ##
+    # @brief 串口关闭。
+    # @details 无
+    # @param self 对象指针。
+    # @param ByNum 从缓存中接收字节数。
+    # @return 无
+    # @note 带异常检测。
+    # @attention 无
+    #
     def Cl(self):
         try:
             self.Ser.close()
         except:
             raise
 
+    ##
+    # @brief 获取接收缓冲区数据长度。
+    # @details 单位是字节。
+    # @param self 对象指针。
+    # @return 缓冲区数据长度
+    # @note 无
+    # @attention 无
+    #
     def GetRecvCachLen(self):
         return self.Ser.inWaiting()

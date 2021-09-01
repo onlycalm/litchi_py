@@ -1,3 +1,13 @@
+##
+# @file win.py
+# @brief 窗口模块。
+# @details 无
+# @author Calm
+# @date 2021-08-30
+# @version v1.0.0
+# @copyright Calm
+#
+
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer
 from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog
@@ -7,6 +17,13 @@ from grph import cOsc
 from log import *
 import numpy
 
+##
+# @class cMainWin
+# @brief Lichi窗口类。
+# @details 该类用于构建Lichi的窗口显示和功能。
+# @note 无
+# @attention 无
+#
 class cMainWin:
     ##
     # @brief 构造函数。
@@ -54,6 +71,14 @@ class cMainWin:
     def show(self):
         self.MainWin.show()
 
+    ##
+    # @brief 串口定时接收。
+    # @details 根据Tmr的时间设置，周期性调用。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def SerTmRecv(self):
         #Test
         #self.Osc.ApdPt("A1", numpy.random.random() * 100)
@@ -63,15 +88,39 @@ class cMainWin:
             RecvTxt = self.SerDri.Recv(RecvLen)
             self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
 
+    ##
+    # @brief 点击关于动作。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def ClkAbtAct(self):
         print("About")
         AbtMsgBx = QMessageBox()
         AbtMsgBx.about(self.MainWin, "关于", "内容")
 
+    ##
+    # @brief 点击刷新串口。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def ClkRfrCom(self):
         print("RfrCom")
         self.RfrCom()
 
+    ##
+    # @brief 点击打开串口。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def ClkOpnPt(self):
         print("OpnPt")
         if self.SerDri.Ser.is_open == False:
@@ -101,6 +150,14 @@ class cMainWin:
                 self.SwPtFrmCmb(True)
                 self.MainWin.OpnPtPb.setStyleSheet("background-color:none")
 
+    ##
+    # @brief 点击保存接收。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def ClkSvRecv(self):
         print("SvRecv")
         Tm = QDateTime.currentDateTime()
@@ -112,19 +169,51 @@ class cMainWin:
             F.write(self.MainWin.RecvTb.toPlainText());
             F.close()
 
+    ##
+    # @brief 点击清空接收。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def ClkClrRecv(self):
         print("ClrRecv")
         self.MainWin.RecvTb.clear()
 
+    ##
+    # @brief 点击清空发送。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def ClkClrSnd(self):
         print("ClrSnd")
         self.MainWin.SndPtb.clear()
 
+    ##
+    # @brief 点击串口发送。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def ClkPtSnd(self):
         print("PtSnd")
         if self.SerDri.Ser.is_open == True:
             self.SerDri.Snd(self.MainWin.SndPtb.toPlainText().encode("Gbk"))
 
+    ##
+    # @brief 刷新Com口。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def RfrCom(self):
         ComLst = self.SerDri.GetCom()
         if len(ComLst) != 0:
@@ -133,6 +222,17 @@ class cMainWin:
             for val in ComLst:
                 self.MainWin.PtCmb.addItem(val)
 
+    ##
+    # @brief 开关串口Frame中的组合框。
+    # @details 将组合框置灰或激活
+    # @param self 对象指针。
+    # @param Sw 开关。
+    # @arg True 有效。
+    # @arg False 无效。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def SwPtFrmCmb(self, Sw):
         self.MainWin.PtCmb.setEnabled(Sw)
         self.MainWin.BrCmb.setEnabled(Sw)
