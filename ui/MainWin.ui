@@ -31,7 +31,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="DiagAstTab">
      <attribute name="title">
@@ -405,6 +405,21 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <layout class="QVBoxLayout" name="GrphVl"/>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>850</x>
+        <y>10</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>StrFmt</string>
+       </property>
+      </item>
      </widget>
     </widget>
     <widget class="QWidget" name="LogAstTab">
