@@ -40,19 +40,22 @@ class cOsc:
     # @param Id Line ID编号，类型为任意字符串。
     # @param LnClr Line颜色。默认值为"k"即黑色。
     # @param LnWd Line宽度。默认值为1。
-    # @param PtClr 点颜色。默认值为"k"即黑色。
+    # @param PtClr 点颜色。默认值为None。
+    # @param PtSty 点样式。默认值为None。
     # @return 无
     # @note 无
     # @attention 无
     #
-    def AddLn(self, Id, LnClr = "k", LnWd = 1, PtClr = "k"):
+    def AddLn(self, Id, LnClr = "k", LnWd = 1, PtClr = None, PtSty = None):
         self.Ln[Id] = {}
         self.Ln[Id]["LnClr"] = LnClr
         self.Ln[Id]["LnWd"] = LnWd
         self.Ln[Id]["PtClr"] = PtClr
         self.Ln[Id]["Sw"] = True
         self.Ln[Id]["Dat"] = []
-        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd), symbolBrush = PtClr, symbol = "o")
+        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd),
+                                          symbolBrush = PtClr, symbol = PtSty)
+        self.Ln[Id]["PtSty"] = PtSty
 
     ##
     # @brief 删除Line对象。
@@ -114,17 +117,20 @@ class cOsc:
     # @param Id Line ID编号。
     # @param LnClr Line颜色。默认值为"k"即黑色。
     # @param LnWd Line宽度。默认值为1。
-    # @param PtClr 点颜色。默认值为"k"即黑色。
+    # @param PtClr 点颜色。默认值为None。
+    # @param PtSty 点样式。默认值为None。
     # @return 无
     # @note 无
     # @attention 无
     #
-    def SetLn(self, Id, LnClr = "k", LnWd = 1, PtClr = "k"):
+    def SetLn(self, Id, LnClr = "k", LnWd = 1, PtClr = None, PtSty = None):
         self.Ln[Id]["LnClr"] = LnClr
         self.Ln[Id]["LnWd"] = LnWd
         self.Ln[Id]["PtClr"] = PtClr
+        self.Ln[Id]["PtSty"] = PtSty
         self.Ln[Id]["Plt"].setData([])
-        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd), symbolBrush = PtClr)
+        self.Ln[Id]["Plt"] = self.Pw.plot(pen = pyqtgraph.mkPen(color = LnClr, width = LnWd),
+                                          symbolBrush = PtClr, symbol = PtSty)
         self.Ln[Id]["Plt"].setData(self.Ln[Id]["Dat"])
 
     ##

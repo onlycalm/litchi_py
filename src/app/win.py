@@ -42,7 +42,7 @@ class cMainWin:
         self.SerDri = cSer()
         self.Tmr = QTimer()
         self.Osc = cOsc()
-        self.Osc.AddLn("A1", "r", 1, "r")
+        self.Osc.AddLn("A1", "r", 1, "r", "+")
         self.Osc.AddLn("A2")
         self.Osc.SetDat("A1", [100, 200, 300])
         self.Osc.SetDat("A2", [100, 100, 100])
