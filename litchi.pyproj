@@ -25,6 +25,7 @@
   <ItemGroup>
     <Compile Include="src\app\litchi.py" />
     <Compile Include="src\app\main.py" />
+    <Compile Include="src\app\prot.py" />
     <Compile Include="src\app\win.py" />
     <Compile Include="src\dri\grph.py" />
     <Compile Include="src\dri\log.py" />

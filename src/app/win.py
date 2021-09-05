@@ -16,6 +16,7 @@ from ser import cSer
 from grph import cOsc
 from log import *
 import numpy
+from prot import *
 
 ##
 # @class cMainWin
@@ -47,6 +48,8 @@ class cMainWin:
         self.Osc.SetDat("A1", [100, 200, 300])
         self.Osc.SetDat("A2", [100, 100, 100])
         #self.Tmr.start(100)
+        StrFmtProt = cStrFmtProt()
+        print(StrFmtProt.Dec("chA: 1, 2, 3\nchB: 4, 5, 6\naaa"))
 
         self.RfrCom()
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
