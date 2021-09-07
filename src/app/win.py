@@ -17,6 +17,7 @@ from grph import cOsc
 from log import *
 import numpy
 from prot import cStrFmtProt
+from thd import *
 
 ##
 # @class cMainWin
@@ -44,6 +45,8 @@ class cMainWin:
         self.Tmr = QTimer()
         self.Osc = cOsc()
         self.StrFmtProt = cStrFmtProt()
+        self.Thd = cThd(1, "HdlDat", self.WtCb)
+        self.Thd.Strt()
 
         self.RfrCom()
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
@@ -81,10 +84,6 @@ class cMainWin:
         if RecvLen > 0:
             RecvTxt = self.SerDri.Recv(RecvLen)
             self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
-
-        Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
-        Dic, _ = self.StrFmtProt.Dec(Msg)
-        self.Osc.CollDat(Dic)
 
     ##
     # @brief 点击关于动作。
@@ -203,6 +202,20 @@ class cMainWin:
         print("PtSnd")
         if self.SerDri.Ser.is_open == True:
             self.SerDri.Snd(self.MainWin.SndPtb.toPlainText().encode("Gbk"))
+
+    ##
+    # @brief 辅助线程回调函数。
+    # @details 无
+    # @param 无
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def WtCb(self, Id, Nm):
+        #while True:
+            Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
+            Dic, _ = self.StrFmtProt.Dec(Msg)
+            self.Osc.CollDat(Dic)
 
     ##
     # @brief 刷新Com口。

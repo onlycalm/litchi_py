@@ -193,9 +193,6 @@ class cOsc:
     #
     def CollDat(self, Dat):
         for Id in Dat:
-            print(Id)
-            print(Dat[Id])
-
             if Id in self.Ln:
                 for Val in Dat[Id]:
                     self.ApdPt(Id, Val)
