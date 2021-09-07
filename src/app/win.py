@@ -16,7 +16,7 @@ from ser import cSer
 from grph import cOsc
 from log import *
 import numpy
-from prot import *
+from prot import cStrFmtProt
 
 ##
 # @class cMainWin
@@ -43,13 +43,7 @@ class cMainWin:
         self.SerDri = cSer()
         self.Tmr = QTimer()
         self.Osc = cOsc()
-        self.Osc.AddLn("A1", "r", 1, "r", "+")
-        self.Osc.AddLn("A2")
-        self.Osc.SetDat("A1", [100, 200, 300])
-        self.Osc.SetDat("A2", [100, 100, 100])
-        #self.Tmr.start(100)
-        StrFmtProt = cStrFmtProt()
-        print(StrFmtProt.Dec("chA: 1, 2, 3\nchB: 4, 5, 6\naaa"))
+        self.StrFmtProt = cStrFmtProt()
 
         self.RfrCom()
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
@@ -83,13 +77,14 @@ class cMainWin:
     # @attention 无
     #
     def SerTmRecv(self):
-        #Test
-        #self.Osc.ApdPt("A1", numpy.random.random() * 100)
-
         RecvLen = self.SerDri.GetRecvCachLen()
         if RecvLen > 0:
             RecvTxt = self.SerDri.Recv(RecvLen)
             self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
+
+        Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
+        Dic, _ = self.StrFmtProt.Dec(Msg)
+        self.Osc.CollDat(Dic)
 
     ##
     # @brief 点击关于动作。

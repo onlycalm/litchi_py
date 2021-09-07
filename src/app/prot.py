@@ -83,15 +83,19 @@ class cStrFmtProt:
         StrFrm = {}
         SurMsg = ""
 
-        DecRst, Msg = self.DecOnce(Msg)
-        if DecRst:
-            StrFrm[DecRst["Id"]] = DecRst["Dat"]
+        ExtrRst, Msg = self.DecOnce(Msg)
+        if ExtrRst:
+            StrFrm[ExtrRst["Id"]] = ExtrRst["Dat"]
             SurMsg = Msg
 
-        while DecRst:
-            DecRst, Msg = self.DecOnce(Msg)
-            if DecRst:
-                StrFrm[DecRst["Id"]] = DecRst["Dat"]
+        while ExtrRst:
+            ExtrRst, Msg = self.DecOnce(Msg)
+            if ExtrRst:
+                if ExtrRst["Id"] in StrFrm: #若Id已存在则追加数据。
+                    StrFrm[ExtrRst["Id"]] += ExtrRst["Dat"]
+                else:
+                    StrFrm[ExtrRst["Id"]] = ExtrRst["Dat"]
+
                 SurMsg = Msg
 
         return StrFrm, SurMsg

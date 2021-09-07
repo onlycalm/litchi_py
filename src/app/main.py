@@ -13,28 +13,10 @@ from PySide2.QtWidgets import QApplication
 from litchi import cLitchi
 import res
 
-from re import *
-from prot import *
-
 if __name__ == "__main__":
-    #app = QApplication(sys.argv)
-    #
-    #Litchi = cLitchi()
-    #Litchi.show()
-    #
-    #sys.exit(app.exec_())
+    app = QApplication(sys.argv)
 
-    #Str = "chA: 1,2\n\r"
-    #end = match(r"(\w+)(\s*):(\s*)(\d(\s*),(\s*))*(\d)(\s*)[\n\r|\r\n|\n]", Str).span()[1]
-    #Str = Str[:end]
-    #print(Str)
-    #Str1 = sub(r"[\n\r|\r\n|\n].*$", "", Str)
-    #print(Str1)
-    #Id = sub(r":.*$", "", Str1)
-    #print(Id)
-    #Dat = findall(r"(\d+)", Str1)
-    #print(Dat)
+    Litchi = cLitchi()
+    Litchi.show()
 
-    StrFmtProt = cStrFmtProt()
-    #print(StrFmtProt.Dec("chA: 1, 2, 3\n\rchB: 4, 5, 6\nchC: 7, 8\r\naa"))
-    print(StrFmtProt.Dec("chA: 1, 2, 3\nchB: 4, 5, 6\nchC: 7, 8\r\n"))
+    sys.exit(app.exec_())

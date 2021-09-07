@@ -97,14 +97,14 @@ class cOsc:
         self.Ln[Id]["Plt"].setData(Dat)
 
     ##
-    # @brief 设置Line数据。
+    # @brief Line新增一个点数据。
     # @details Line末尾插入点。
     # @param self 对象指针。
     # @param Id Line ID编号。
     # @param Val 点的值。
     # @return 无
     # @note 无
-    # @attention 无
+    # @attention 一个点。
     #
     def ApdPt(self, Id, Val):
         self.Ln[Id]["Dat"].append(Val)
@@ -169,5 +169,38 @@ class cOsc:
     def SetGrid(self, SwX = False, SwY = False, Thk = 0.1):
         self.Pw.showGrid(x = SwX, y = SwY, alpha = Thk)
 
+    ##
+    # @brief 设置示波器Label。
+    # @details 无
+    # @param self 对象指针。
+    # @param Ax Label位置。
+    # @param Str 显示字符串。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def SetLbl(self, Ax, Str):
         self.Pw.setLabel(axis = Ax, text = Str)
+
+    ##
+    # @brief 采集数据。
+    # @details 将采集的数据添加到示波器中显示。如果Id不存在则新建。在曲线之后新增点。
+    # @param self 对象指针。
+    # @param Dat 为字典型，待处理数据。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def CollDat(self, Dat):
+        for Id in Dat:
+            print(Id)
+            print(Dat[Id])
+
+            if Id in self.Ln:
+                for Val in Dat[Id]:
+                    self.ApdPt(Id, Val)
+            else:
+                self.AddLn(Id)
+
+                for Val in Dat[Id]:
+                    self.ApdPt(Id, Val)
