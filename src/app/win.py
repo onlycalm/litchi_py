@@ -18,6 +18,7 @@ from log import *
 import numpy
 from prot import cStrFmtProt
 from thd import *
+from det import *
 
 ##
 # @class cMainWin
@@ -47,6 +48,7 @@ class cMainWin:
         self.StrFmtProt = cStrFmtProt()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
         self.Thd.Strt()
+        self.DetVw = cDetVw(self.MainWin.DetTb)
 
         self.RfrCom()
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
