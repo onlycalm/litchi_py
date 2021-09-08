@@ -10,7 +10,7 @@
 
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer
-from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog
+from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget
 from PySide2.QtGui import QIcon
 from ser import cSer
 from grph import cOsc
@@ -18,6 +18,7 @@ from log import *
 import numpy
 from prot import cStrFmtProt
 from thd import *
+from logvw import *
 
 ##
 # @class cMainWin
@@ -44,14 +45,16 @@ class cMainWin:
         self.SerDri = cSer()
         self.Tmr = QTimer()
         self.Osc = cOsc()
+        self.LogTw = cLogVw(self.MainWin.LogTw)
         self.StrFmtProt = cStrFmtProt()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
-        self.Thd.Strt()
 
         self.RfrCom()
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
+        self.Thd.Strt()
 
         self.Tmr.timeout.connect(self.SerTmRecv)
+        self.LogTw.Tw.clicked.connect(self.ClkLogVw)
         self.MainWin.AbtAct.triggered.connect(self.ClkAbtAct)
         self.MainWin.RfrComPb.clicked.connect(self.ClkRfrCom)
         self.MainWin.OpnPtPb.clicked.connect(self.ClkOpnPt)
@@ -204,6 +207,22 @@ class cMainWin:
             self.SerDri.Snd(self.MainWin.SndPtb.toPlainText().encode("Gbk"))
 
     ##
+    # @brief 点击日志浏览器。
+    # @details 无
+    # @param self 对象指针。
+    # @param MdlIdx 点击对象。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def ClkLogVw(self, MdlIdx):
+        print("ClkLogVw", MdlIdx.row())
+        print(self.LogTw.Tw.currentItem().text(0))
+        print(self.LogTw.Tw.currentItem().text(1))
+        print(self.LogTw.Tw.currentItem().text(2))
+        print(self.LogTw.Tw.currentItem().text(3))
+
+    ##
     # @brief 辅助线程回调函数。
     # @details 无
     # @param 无
@@ -212,10 +231,15 @@ class cMainWin:
     # @attention 无
     #
     def WtCb(self, Id, Nm):
+        #Only for test.
         #while True:
-            Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
-            Dic, _ = self.StrFmtProt.Dec(Msg)
-            self.Osc.CollDat(Dic)
+        Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
+        Dic, _ = self.StrFmtProt.Dec(Msg)
+        self.Osc.CollDat(Dic)
+
+        self.LogTw.ApdLog(["1", "1", "11", "111"])
+        self.LogTw.ApdLog(["2", "2", "22", "222"])
+        self.LogTw.ApdLog(["3", "3", "33", "333"])
 
     ##
     # @brief 刷新Com口。
@@ -235,7 +259,7 @@ class cMainWin:
 
     ##
     # @brief 开关串口Frame中的组合框。
-    # @details 将组合框置灰或激活
+    # @details 将组合框置灰或激活。
     # @param self 对象指针。
     # @param Sw 开关。
     # @arg True 有效。

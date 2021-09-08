@@ -31,7 +31,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="DiagAstTab">
      <attribute name="title">
@@ -406,7 +406,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <layout class="QVBoxLayout" name="GrphVl"/>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="ProtCmb">
       <property name="geometry">
        <rect>
         <x>850</x>
@@ -426,6 +426,55 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>日志助手</string>
      </attribute>
+     <widget class="QTextBrowser" name="LogTb">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>330</y>
+        <width>571</width>
+        <height>192</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTreeWidget" name="LogTw">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>571</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>序号</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>等级</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignLeading|AlignVCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>时间</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignLeading|AlignVCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>信息</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignLeading|AlignVCenter</set>
+       </property>
+      </column>
+     </widget>
     </widget>
    </widget>
   </widget>
