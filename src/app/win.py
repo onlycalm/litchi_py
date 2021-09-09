@@ -9,20 +9,17 @@
 #
 
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer
-from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget
-from PySide2.QtGui import QIcon
+from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer, Qt
+from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget
+from PySide2.QtGui import QIcon, QColor
 from ser import cSer
 from grph import cOsc
 from log import *
 import numpy
 from prot import cStrFmtProt
 from thd import *
-<<<<<<< HEAD
-from det import *
-=======
+from detvw import *
 from logvw import *
->>>>>>> develop
 
 ##
 # @class cMainWin
@@ -49,20 +46,17 @@ class cMainWin:
         self.SerDri = cSer()
         self.Tmr = QTimer()
         self.Osc = cOsc()
+        self.DetTw = cDetVw(self.MainWin.DetTw)
         self.LogTw = cLogVw(self.MainWin.LogTw)
         self.StrFmtProt = cStrFmtProt()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
-<<<<<<< HEAD
-        self.Thd.Strt()
-        self.DetVw = cDetVw(self.MainWin.DetTb)
-=======
->>>>>>> develop
 
-        self.RfrCom()
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
-        self.Thd.Strt()
+        self.RfrCom()
+        self.LogTw.SetRowAmt(5)
 
         self.Tmr.timeout.connect(self.SerTmRecv)
+        self.DetTw.Tw.clicked.connect(self.ClkDetVw)
         self.LogTw.Tw.clicked.connect(self.ClkLogVw)
         self.MainWin.AbtAct.triggered.connect(self.ClkAbtAct)
         self.MainWin.RfrComPb.clicked.connect(self.ClkRfrCom)
@@ -71,6 +65,8 @@ class cMainWin:
         self.MainWin.ClrRecvPb.clicked.connect(self.ClkClrRecv)
         self.MainWin.ClrSndPb.clicked.connect(self.ClkClrSnd)
         self.MainWin.SndPb.clicked.connect(self.ClkPtSnd)
+
+        self.Thd.Strt()
 
     ##
     # @brief 显示窗口。
@@ -216,20 +212,32 @@ class cMainWin:
             self.SerDri.Snd(self.MainWin.SndPtb.toPlainText().encode("Gbk"))
 
     ##
+    # @brief 点击Det浏览器。
+    # @details 无
+    # @param self 对象指针。
+    # @param ClkMsg 点击对象。
+    # @return 无
+    # @note 无
+    # @attention 索引从0行0列开始。
+    #
+    def ClkDetVw(self, ClkMsg):
+        print("ClkLogVw", ClkMsg.row())
+        print(self.DetTw.Tw.currentItem().text(0))
+        print(self.DetTw.Tw.currentItem().text(1))
+        print(self.DetTw.Tw.currentItem().text(2))
+        print(self.DetTw.Tw.currentItem().text(3))
+
+    ##
     # @brief 点击日志浏览器。
     # @details 无
     # @param self 对象指针。
-    # @param MdlIdx 点击对象。
+    # @param ClkMsg 点击对象。
     # @return 无
     # @note 无
-    # @attention 无
+    # @attention 索引从0行0列开始。
     #
-    def ClkLogVw(self, MdlIdx):
-        print("ClkLogVw", MdlIdx.row())
-        print(self.LogTw.Tw.currentItem().text(0))
-        print(self.LogTw.Tw.currentItem().text(1))
-        print(self.LogTw.Tw.currentItem().text(2))
-        print(self.LogTw.Tw.currentItem().text(3))
+    def ClkLogVw(self, ClkMsg):
+        print("ClkLogVw", ClkMsg.row())
 
     ##
     # @brief 辅助线程回调函数。
@@ -246,9 +254,9 @@ class cMainWin:
         Dic, _ = self.StrFmtProt.Dec(Msg)
         self.Osc.CollDat(Dic)
 
-        self.LogTw.ApdLog(["1", "1", "11", "111"])
-        self.LogTw.ApdLog(["2", "2", "22", "222"])
-        self.LogTw.ApdLog(["3", "3", "33", "333"])
+        self.DetTw.ApdRec(["1", "1", "11", "111"])
+        self.DetTw.ApdRec(["2", "2", "22", "222"])
+        self.DetTw.ApdRec(["3", "3", "33", "333"])
 
     ##
     # @brief 刷新Com口。

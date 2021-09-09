@@ -31,7 +31,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="DiagAstTab">
      <attribute name="title">
@@ -390,23 +390,18 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>检测助手</string>
      </attribute>
-     <widget class="QTableWidget" name="DetTb">
+     <widget class="QTreeWidget" name="DetTw">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>761</width>
+        <width>701</width>
         <height>501</height>
        </rect>
       </property>
       <column>
        <property name="text">
         <string>序号</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>状态</string>
        </property>
       </column>
       <column>
@@ -421,7 +416,12 @@ p, li { white-space: pre-wrap; }
       </column>
       <column>
        <property name="text">
-        <string>原因</string>
+        <string>描述</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>状态</string>
        </property>
       </column>
      </widget>
@@ -471,42 +471,40 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
      </widget>
-     <widget class="QTreeWidget" name="LogTw">
+     <widget class="QTableWidget" name="LogTw">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
+        <y>10</y>
         <width>571</width>
-        <height>291</height>
+        <height>311</height>
        </rect>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
       <column>
        <property name="text">
-        <string>序号</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
         <string>等级</string>
-       </property>
-       <property name="textAlignment">
-        <set>AlignLeading|AlignVCenter</set>
        </property>
       </column>
       <column>
        <property name="text">
         <string>时间</string>
        </property>
-       <property name="textAlignment">
-        <set>AlignLeading|AlignVCenter</set>
-       </property>
       </column>
       <column>
        <property name="text">
-        <string>信息</string>
-       </property>
-       <property name="textAlignment">
-        <set>AlignLeading|AlignVCenter</set>
+        <string>描述</string>
        </property>
       </column>
      </widget>
