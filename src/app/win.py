@@ -38,6 +38,7 @@ class cMainWin:
     # @attention 无
     #
     def __init__(self):
+        LogInfo(LogStrEntFun)
         MainWinUi = QFile("ui/MainWin.ui")
         MainWinUi.open(QIODevice.ReadOnly)
         self.MainWin = QUiLoader().load(MainWinUi)
@@ -67,6 +68,7 @@ class cMainWin:
         self.MainWin.SndPb.clicked.connect(self.ClkPtSnd)
 
         self.Thd.Strt()
+        LogInfo(LogStrExFun)
 
     ##
     # @brief 显示窗口。

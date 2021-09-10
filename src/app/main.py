@@ -12,11 +12,17 @@ import sys
 from PySide2.QtWidgets import QApplication
 from litchi import cLitchi
 import res
+from log import *
 
-if __name__ == "__main__":
+def main():
+    LogInfo(LogStrEntFun)
     app = QApplication(sys.argv)
 
     Litchi = cLitchi()
     Litchi.show()
 
+    LogInfo(LogStrExFun)
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    main()
