@@ -28,9 +28,7 @@ class cLitchi:
     # @attention 无
     #
     def __init__(self):
-        LogInfo(LogStrEntFun)
         self.MainWin = win.cMainWin()
-        LogInfo(LogStrExFun)
 
     ##
     # @brief 窗口显示函数。
@@ -41,6 +39,4 @@ class cLitchi:
     # @attention 无
     #
     def show(self):
-        LogInfo(LogStrEntFun)
         self.MainWin.show()
-        LogInfo(LogStrExFun)

@@ -10,12 +10,13 @@
 
 import logging
 
-logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s [%(levelname)s]-(%(filename)s %(funcName)s %(lineno)s): %(message)s')
-LogStrEntFun = "<-----Enter function----->"
-LogStrExFun = "<-----Exit function----->"
+logging.basicConfig(level = logging.NOTSET, format = '%(asctime)s [%(levelname)s]-(%(filename)s %(funcName)s %(lineno)s): %(message)s')
+#logging.TRACE = 15
+#logging.addLevelName(logging.TRACE, "TRACE")
+#logging.log(logging.TRACE, "Test")
 
-LogCrt = logging.critical #严重。
-LogErr = logging.error    #错误。
-LogWrn = logging.warning  #警告。
-LogInfo = logging.info    #信息。
-LogDbg = logging.debug    #调试。
+LogCrt = logging.critical #严重，Lv50。
+LogErr = logging.error    #错误，Lv40。
+LogWrn = logging.warning  #警告，Lv30。
+LogInfo = logging.info    #信息，Lv20。
+LogDbg = logging.debug    #调试，Lv10。
