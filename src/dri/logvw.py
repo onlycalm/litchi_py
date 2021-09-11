@@ -10,6 +10,7 @@
 
 from PySide2.QtWidgets import QTableWidget
 from PySide2.QtWidgets import QTableWidgetItem
+from log import *
 
 ##
 # @class cLogVw
@@ -29,10 +30,12 @@ class cLogVw:
     # @attention 无
     #
     def __init__(self, Obj = None):
+        LogTr("Enter cLogVw.__init__().")
         if Obj:
             self.Tw = Obj
         else:
             self.Tw = QTableWidget()
+        LogTr("Exit cLogVw.__init__().")
 
     ##
     # @brief 设置一个表格单元内容。
@@ -46,7 +49,9 @@ class cLogVw:
     # @attention 索引从0行0列开始
     #
     def SetCell(self, Row, Col, Rec):
+        LogTr("Enter cLogVw.SetCell().")
         self.Tw.setItem(Row, Col, QTableWidgetItem(Rec))
+        LogTr("Exit cLogVw.SetCell().")
 
     ##
     # @brief 清空Log记录。
@@ -57,7 +62,9 @@ class cLogVw:
     # @attention 无
     #
     def ClrLog(self):
+        LogTr("Enter cLogVw.ClrLog().")
         self.Tw.clear()
+        LogTr("Exit cLogVw.ClrLog().")
 
     ##
     # @brief 设置行数量。
@@ -68,7 +75,9 @@ class cLogVw:
     # @attention 无
     #
     def SetRowAmt(self, RowAmt):
+        LogTr("Enter cLogVw.SetRowAmt().")
         self.Tw.setRowCount(RowAmt)
+        LogTr("Exit cLogVw.SetRowAmt().")
 
     ##
     # @brief 设置列数量。
@@ -79,7 +88,9 @@ class cLogVw:
     # @attention 无
     #
     def SetColAmt(self, ColAmt):
+        LogTr("Enter cLogVw.SetColAmt().")
         self.Tw.setColumnCount(ColAmt)
+        LogTr("Exit cLogVw.SetColAmt().")
 
     ##
     # @brief 设置表格单元格背景色。
@@ -97,4 +108,6 @@ class cLogVw:
     # @encode
     #
     def SetCellBgClr(self, Row, Col, Clr):
+        LogTr("Enter cLogVw.SetCellBgClr().")
         self.Tw.item(Row, Col).setBackground(Clr)
+        LogTr("Exit cLogVw.SetCellBgClr().")

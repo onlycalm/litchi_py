@@ -9,6 +9,7 @@
 #
 
 from PySide2.QtCore import QThread
+from log import *
 
 ##
 # @class cThd
@@ -30,10 +31,12 @@ class cThd(QThread):
     # @attention 无
     #
     def __init__(self, Id, Nm, Cb):
+        LogTr("Enter cLogVw.__init__().")
         QThread.__init__(self)
         self.Id = Id
         self.Nm = Nm
         self.Cb = Cb
+        LogTr("Exit cLogVw.__init__().")
 
     ##
     # @brief 线程执行入口函数。
@@ -44,8 +47,10 @@ class cThd(QThread):
     # @attention 该函数内部将调用线程回调函数。
     #
     def run(self):
+        LogTr("Enter cLogVw.Run().")
         if self.Cb:
             self.Cb(self.Id, self.Nm)
+        LogTr("Exit cLogVw.Run().")
 
     ##
     # @brief 绑定线程回调函数。
@@ -56,7 +61,9 @@ class cThd(QThread):
     # @attention 无
     #
     def SetCb(self, Cb):
+        LogTr("Enter cLogVw.SetCb().")
         self.Cb = Cb
+        LogTr("Exit cLogVw.SetCb().")
 
     ##
     # @brief 启动线程。
@@ -67,4 +74,6 @@ class cThd(QThread):
     # @attention 无
     #
     def Strt(self):
+        LogTr("Enter cLogVw.Strt().")
         QThread.start(self)
+        LogTr("Exit cLogVw.Strt().")

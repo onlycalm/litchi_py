@@ -38,7 +38,7 @@ class cMainWin:
     # @attention 无
     #
     def __init__(self):
-        LogInfo("Enter cMainWin.__init__().")
+        LogTr("Enter cMainWin.__init__().")
         MainWinUi = QFile("ui/MainWin.ui")
         MainWinUi.open(QIODevice.ReadOnly)
         self.MainWin = QUiLoader().load(MainWinUi)
@@ -68,7 +68,7 @@ class cMainWin:
         self.MainWin.SndPb.clicked.connect(self.ClkPtSnd)
 
         self.Thd.Strt()
-        LogInfo("Exit cMainWin.__init__().")
+        LogTr("Exit cMainWin.__init__().")
 
     ##
     # @brief 显示窗口。
@@ -79,7 +79,9 @@ class cMainWin:
     # @attention 无
     #
     def show(self):
+        LogTr("Enter cMainWin.show().")
         self.MainWin.show()
+        LogTr("Exit cMainWin.show().")
 
     ##
     # @brief 串口定时接收。
@@ -90,10 +92,12 @@ class cMainWin:
     # @attention 无
     #
     def SerTmRecv(self):
+        LogTr("Enter cMainWin.SerTmRecv().")
         RecvLen = self.SerDri.GetRecvCachLen()
         if RecvLen > 0:
             RecvTxt = self.SerDri.Recv(RecvLen)
             self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
+        LogTr("Exit cMainWin.SerTmRecv().")
 
     ##
     # @brief 点击关于动作。
@@ -104,9 +108,10 @@ class cMainWin:
     # @attention 无
     #
     def ClkAbtAct(self):
-        print("About")
+        LogTr("Enter cMainWin.ClkAbtAct().")
         AbtMsgBx = QMessageBox()
         AbtMsgBx.about(self.MainWin, "关于", "内容")
+        LogTr("Exit cMainWin.ClkAbtAct().")
 
     ##
     # @brief 点击刷新串口。
@@ -117,8 +122,9 @@ class cMainWin:
     # @attention 无
     #
     def ClkRfrCom(self):
-        print("RfrCom")
+        LogTr("Enter cMainWin.ClkRfrCom().")
         self.RfrCom()
+        LogTr("Exit cMainWin.ClkRfrCom().")
 
     ##
     # @brief 点击打开串口。
@@ -129,7 +135,7 @@ class cMainWin:
     # @attention 无
     #
     def ClkOpnPt(self):
-        print("OpnPt")
+        LogTr("Enter cMainWin.ClkOpnPt().")
         if self.SerDri.Ser.is_open == False:
             PtInfo = {"Port":self.MainWin.PtCmb.currentText(),
                       "BaudRate":self.MainWin.BrCmb.currentText(),
@@ -156,6 +162,7 @@ class cMainWin:
                 self.Tmr.stop()
                 self.SwPtFrmCmb(True)
                 self.MainWin.OpnPtPb.setStyleSheet("background-color:none")
+        LogTr("Exit cMainWin.ClkOpnPt().")
 
     ##
     # @brief 点击保存接收。
@@ -166,7 +173,7 @@ class cMainWin:
     # @attention 无
     #
     def ClkSvRecv(self):
-        print("SvRecv")
+        LogTr("Enter cMainWin.ClkSvRecv().")
         Tm = QDateTime.currentDateTime()
         FmtTm = Tm.toString('yyMMdd-hhmmss')
         FDlg = QFileDialog(self.MainWin)
@@ -175,6 +182,7 @@ class cMainWin:
             F = open(Fpth[0], 'w')
             F.write(self.MainWin.RecvTb.toPlainText());
             F.close()
+        LogTr("Exit cMainWin.ClkSvRecv().")
 
     ##
     # @brief 点击清空接收。
@@ -185,8 +193,9 @@ class cMainWin:
     # @attention 无
     #
     def ClkClrRecv(self):
-        print("ClrRecv")
+        LogTr("Enter cMainWin.ClkClrRecv().")
         self.MainWin.RecvTb.clear()
+        LogTr("Exit cMainWin.ClkClrRecv().")
 
     ##
     # @brief 点击清空发送。
@@ -197,8 +206,9 @@ class cMainWin:
     # @attention 无
     #
     def ClkClrSnd(self):
-        print("ClrSnd")
+        LogTr("Enter cMainWin.ClkClrSnd().")
         self.MainWin.SndPtb.clear()
+        LogTr("Exit cMainWin.ClkClrSnd().")
 
     ##
     # @brief 点击串口发送。
@@ -209,9 +219,10 @@ class cMainWin:
     # @attention 无
     #
     def ClkPtSnd(self):
-        print("PtSnd")
+        LogTr("Enter cMainWin.ClkPtSnd().")
         if self.SerDri.Ser.is_open == True:
             self.SerDri.Snd(self.MainWin.SndPtb.toPlainText().encode("Gbk"))
+        LogTr("Exit cMainWin.ClkPtSnd().")
 
     ##
     # @brief 点击Det浏览器。
@@ -223,11 +234,13 @@ class cMainWin:
     # @attention 索引从0行0列开始。
     #
     def ClkDetVw(self, ClkMsg):
-        print("ClkLogVw", ClkMsg.row())
-        print(self.DetTw.Tw.currentItem().text(0))
-        print(self.DetTw.Tw.currentItem().text(1))
-        print(self.DetTw.Tw.currentItem().text(2))
-        print(self.DetTw.Tw.currentItem().text(3))
+        LogTr("Enter cMainWin.ClkDetVw().")
+        LogDbg(f"ClkMsg.row: {ClkMsg.row()}")
+        LogDbg(self.DetTw.Tw.currentItem().text(0))
+        LogDbg(self.DetTw.Tw.currentItem().text(1))
+        LogDbg(self.DetTw.Tw.currentItem().text(2))
+        LogDbg(self.DetTw.Tw.currentItem().text(3))
+        LogTr("Exit cMainWin.ClkDetVw().")
 
     ##
     # @brief 点击日志浏览器。
@@ -239,7 +252,9 @@ class cMainWin:
     # @attention 索引从0行0列开始。
     #
     def ClkLogVw(self, ClkMsg):
-        print("ClkLogVw", ClkMsg.row())
+        LogTr("Enter cMainWin.ClkLogVw().")
+        LogDbg(f"ClkMsg.row: {ClkMsg.row()}")
+        LogTr("Exit cMainWin.ClkLogVw().")
 
     ##
     # @brief 辅助线程回调函数。
@@ -250,6 +265,7 @@ class cMainWin:
     # @attention 无
     #
     def WtCb(self, Id, Nm):
+        LogTr("Enter cMainWin.WtCb().")
         #Only for test.
         #while True:
         Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
@@ -259,6 +275,7 @@ class cMainWin:
         self.DetTw.ApdRec(["1", "1", "11", "111"])
         self.DetTw.ApdRec(["2", "2", "22", "222"])
         self.DetTw.ApdRec(["3", "3", "33", "333"])
+        LogTr("Exit cMainWin.WtCb().")
 
     ##
     # @brief 刷新Com口。
@@ -269,12 +286,14 @@ class cMainWin:
     # @attention 无
     #
     def RfrCom(self):
+        LogTr("Enter cMainWin.RfrCom().")
         ComLst = self.SerDri.GetCom()
         if len(ComLst) != 0:
             self.MainWin.PtCmb.clear()
 
             for val in ComLst:
                 self.MainWin.PtCmb.addItem(val)
+        LogTr("Exit cMainWin.RfrCom().")
 
     ##
     # @brief 开关串口Frame中的组合框。
@@ -288,6 +307,7 @@ class cMainWin:
     # @attention 无
     #
     def SwPtFrmCmb(self, Sw):
+        LogTr("Enter cMainWin.SwPtFrmCmb().")
         self.MainWin.PtCmb.setEnabled(Sw)
         self.MainWin.BrCmb.setEnabled(Sw)
         self.MainWin.DbCmb.setEnabled(Sw)
@@ -295,3 +315,4 @@ class cMainWin:
         self.MainWin.ParCmb.setEnabled(Sw)
         self.MainWin.FcCmb.setEnabled(Sw)
         self.MainWin.RfrComPb.setEnabled(Sw)
+        LogTr("Exit cMainWin.SwPtFrmCmb().")

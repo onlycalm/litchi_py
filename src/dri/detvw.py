@@ -9,6 +9,7 @@
 #
 
 from PySide2.QtWidgets import QTreeWidget, QTreeWidgetItem
+from log import *
 
 ##
 # @class cDetVw
@@ -28,10 +29,12 @@ class cDetVw:
     # @attention 无
     #
     def __init__(self, Obj = None):
+        LogTr("Enter cDetVw.__init__().")
         if Obj:
             self.Tw = Obj
         else:
             self.Tw = QTreeWidget()
+        LogTr("Exit cDetVw.__init__().")
 
     ##
     # @brief 添加一条检测记录。
@@ -43,7 +46,9 @@ class cDetVw:
     # @attention 无
     #
     def ApdRec(self, Rec):
+        LogTr("Enter cDetVw.ApdRec().")
         self.Tw.addTopLevelItem(QTreeWidgetItem(Rec)) #添加一项
+        LogTr("Exit cDetVw.ApdRec().")
 
     ##
     # @brief 清空Det记录。
@@ -54,4 +59,6 @@ class cDetVw:
     # @attention 无
     #
     def ClrDet(self):
+        LogTr("Enter cDetVw.ClrDet().")
         self.Tw.clear()
+        LogTr("Exit cDetVw.ClrDet().")

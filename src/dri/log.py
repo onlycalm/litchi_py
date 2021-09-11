@@ -8,15 +8,16 @@
 # @copyright Calm
 #
 
-import logging
+import sys
+from loguru import logger
 
-logging.basicConfig(level = logging.NOTSET, format = '%(asctime)s [%(levelname)s]-(%(filename)s %(funcName)s %(lineno)s): %(message)s')
-#logging.TRACE = 15
-#logging.addLevelName(logging.TRACE, "TRACE")
-#logging.log(logging.TRACE, "Test")
+logger.remove(handler_id=None) #清除默认设置。
+logger.add(sys.stderr, format = "{time:YYYY-MM-DD HH:mm:ss.SSS} [{level}] {module}:{function}:{line} - {message}", level = "TRACE")
 
-LogCrt = logging.critical #严重，Lv50。
-LogErr = logging.error    #错误，Lv40。
-LogWrn = logging.warning  #警告，Lv30。
-LogInfo = logging.info    #信息，Lv20。
-LogDbg = logging.debug    #调试，Lv10。
+LogCrt = logger.critical #Lv50
+LogErr = logger.error    #Lv40
+LogWrn = logger.warning  #Lv30
+LogScs = logger.success  #Lv25
+LogInf = logger.info     #Lv20
+LogDbg = logger.debug    #Lv10
+LogTr = logger.trace     #Lv5

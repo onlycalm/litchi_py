@@ -28,7 +28,9 @@ class cLitchi:
     # @attention 无
     #
     def __init__(self):
+        LogTr("Enter cLitchi.__init__().")
         self.MainWin = win.cMainWin()
+        LogTr("Exit cLitchi.__init__().")
 
     ##
     # @brief 窗口显示函数。
@@ -39,4 +41,6 @@ class cLitchi:
     # @attention 无
     #
     def show(self):
+        LogTr("Enter cLitchi.show().")
         self.MainWin.show()
+        LogTr("Exit cLitchi.show().")

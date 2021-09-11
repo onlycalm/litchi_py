@@ -15,14 +15,14 @@ import res
 from log import *
 
 def main():
-    LogInfo("Enter main().")
+    LogTr("Enter main().")
     app = QApplication(sys.argv)
 
     Litchi = cLitchi()
     Litchi.show()
 
-    LogInfo("Exit main().")
     sys.exit(app.exec_())
+    LogTr("Exit main().")
 
 if __name__ == "__main__":
     main()

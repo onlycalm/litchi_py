@@ -9,6 +9,7 @@
 #
 
 from re import *
+from log import *
 
 ##
 # @class cStrFmtProt
@@ -31,7 +32,9 @@ class cStrFmtProt:
     # @attention 无
     #
     def __init__(self):
+        LogTr("Enter cStrFmtProt.__init__().")
         pass
+        LogTr("Exit cStrFmtProt.__init__().")
 
     ##
     # @brief 单次字符串帧格式解析。
@@ -49,6 +52,7 @@ class cStrFmtProt:
     # @attention 无
     #
     def DecOnce(self, Msg):
+        LogTr("Enter cStrFmtProt.DecOnce().")
         StrFrm = {}
         SurMsg = Msg
 
@@ -66,6 +70,7 @@ class cStrFmtProt:
                 if len(Id) and len(Dat):
                     StrFrm = {"Id":Id, "Dat":Dat}
 
+        LogTr("Exit cStrFmtProt.DecOnce().")
         return StrFrm, SurMsg
 
     ##
@@ -80,6 +85,7 @@ class cStrFmtProt:
     # @attention 无
     #
     def Dec(self, Msg):
+        LogTr("Enter cStrFmtProt.Dec().")
         StrFrm = {}
         SurMsg = ""
 
@@ -98,4 +104,5 @@ class cStrFmtProt:
 
                 SurMsg = Msg
 
+        LogTr("Exit cStrFmtProt.Dec().")
         return StrFrm, SurMsg

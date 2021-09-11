@@ -10,6 +10,7 @@
 
 import serial
 import serial.tools.list_ports
+from log import *
 
 ##
 # @class cSer
@@ -28,6 +29,7 @@ class cSer:
     # @attention 无
     #
     def __init__(self):
+        LogTr("Enter cLogVw.__init__().")
         self.Ser = serial.Serial()
 
         self.BrDict = {"110":110, "300":300, "600":600, "1200":1200, "2400":2400, "4800":4800, "9600":9600,
@@ -38,6 +40,7 @@ class cSer:
         self.BySzDict = {"5":serial.FIVEBITS, "6":serial.SIXBITS, "7":serial.SEVENBITS, "8":serial.EIGHTBITS}
         self.ParDict = {"None":serial.PARITY_NONE, "Even":serial.PARITY_EVEN, "Odd":serial.PARITY_ODD, "Mark":serial.PARITY_MARK, "Space":serial.PARITY_SPACE}
         self.StpBitDict = {"1":serial.STOPBITS_ONE, "1.5":serial.STOPBITS_ONE_POINT_FIVE, "2":serial.STOPBITS_TWO}
+        LogTr("Exit cLogVw.__init__().")
 
     ##
     # @brief 获取Com口信息。
@@ -48,6 +51,7 @@ class cSer:
     # @attention 无
     #
     def GetCom(self):
+        LogTr("Enter cLogVw.GetCom().")
         SerLst = list(serial.tools.list_ports.comports())
         ComLst = []
 
@@ -57,6 +61,8 @@ class cSer:
 
         ComLst = list(set(ComLst)) #删除重复元素
         ComLst.sort()
+
+        LogTr("Exit cLogVw.GetCom().")
         return ComLst
 
     ##
@@ -69,6 +75,7 @@ class cSer:
     # @attention 无
     #
     def Opn(self, PtInfo):
+        LogTr("Enter cLogVw.Opn().")
         self.Ser.port = PtInfo["Port"]
         self.Ser.baudrate = self.BrDict[PtInfo["BaudRate"]]
         self.Ser.bytesize = self.BySzDict[PtInfo["ByteSize"]]
@@ -85,6 +92,7 @@ class cSer:
             self.Ser.open()
         except:
             raise
+        LogTr("Exit cLogVw.Opn().")
 
     ##
     # @brief 发送串口信息。
@@ -96,7 +104,9 @@ class cSer:
     # @attention 无
     #
     def Snd(self, Txt):
+        LogTr("Enter cLogVw.Snd().")
         self.Ser.write(Txt)
+        LogTr("Exit cLogVw.Snd().")
 
     ##
     # @brief 接收串口信息。
@@ -108,6 +118,8 @@ class cSer:
     # @attention 无
     #
     def Recv(self, ByNum):
+        LogTr("Enter cLogVw.Recv().")
+        LogTr("Exit cLogVw.Recv().")
         return self.Ser.read(ByNum)
 
     ##
@@ -120,10 +132,12 @@ class cSer:
     # @attention 无
     #
     def Cl(self):
+        LogTr("Enter cLogVw.Cl().")
         try:
             self.Ser.close()
         except:
             raise
+        LogTr("Exit cLogVw.Cl().")
 
     ##
     # @brief 获取接收缓冲区数据长度。
@@ -134,4 +148,6 @@ class cSer:
     # @attention 无
     #
     def GetRecvCachLen(self):
+        LogTr("Enter cLogVw.GetRecvCachLen().")
+        LogTr("Exit cLogVw.GetRecvCachLen().")
         return self.Ser.inWaiting()
