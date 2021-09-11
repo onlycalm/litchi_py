@@ -236,10 +236,10 @@ class cMainWin:
     def ClkDetVw(self, ClkMsg):
         LogTr("Enter cMainWin.ClkDetVw().")
         LogDbg(f"ClkMsg.row: {ClkMsg.row()}")
-        LogDbg(self.DetTw.Tw.currentItem().text(0))
-        LogDbg(self.DetTw.Tw.currentItem().text(1))
-        LogDbg(self.DetTw.Tw.currentItem().text(2))
-        LogDbg(self.DetTw.Tw.currentItem().text(3))
+        LogInf(f"{self.DetTw.Tw.currentItem().text(0)} | " +
+               f"{self.DetTw.Tw.currentItem().text(1)} | " +
+               f"{self.DetTw.Tw.currentItem().text(2)} | " +
+               f"{self.DetTw.Tw.currentItem().text(3)}")
         LogTr("Exit cMainWin.ClkDetVw().")
 
     ##
@@ -269,7 +269,7 @@ class cMainWin:
         #Only for test.
         #while True:
         Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
-        Dic, _ = self.StrFmtProt.Dec(Msg)
+        Dic, SurMsg = self.StrFmtProt.Dec(Msg)
         self.Osc.CollDat(Dic)
 
         self.DetTw.ApdRec(["1", "1", "11", "111"])

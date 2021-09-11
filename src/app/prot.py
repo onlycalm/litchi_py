@@ -36,14 +36,14 @@ class cStrFmtProt:
         pass
         LogTr("Exit cStrFmtProt.__init__().")
 
+
     ##
-    # @brief 单次字符串帧格式解析。
-    # @details 无
+    # @brief 解析指令。
+    # @details 有效指令为字符串帧格式。
     # @param self 对象指针。
     # Wparam Msg 解析内容。
     # @return
     #   - StrFrm 字符串帧解码结果。
-    #   - SurMsg 解析剩余内容。
     # @note 帧格式为："<Str>: Num1, Num2, Num3...\n"
     #   1.<Str>为任意标识字符串；
     #   2.Numx为数据；
@@ -51,33 +51,31 @@ class cStrFmtProt:
     #   例：printf("chA: 1, 2, 3\nchB: 4, 5, 6\n")
     # @attention 无
     #
-    def DecOnce(self, Msg):
-        LogTr("Enter cStrFmtProt.DecOnce().")
+    def DecInstr(self, Msg):
+        LogTr("Enter cStrFmtProt.DecInstr().")
         StrFrm = {}
-        SurMsg = Msg
 
         if len(Msg):
             MtchRst = match(r"(\w+)(\s*):(\s*)(\d(\s*),(\s*))*(\d)(\s*)[\n\r|\r\n|\n]", Msg)
 
             if MtchRst:
-                Idx = MtchRst.span()[1]
-                SurMsg = Msg[Idx:]
-                Msg = Msg[:Idx]
-                Msg = sub(r"[\n\r|\r\n|\n].*$", "", Msg)
-                Id = sub(r":.*$", "", Msg)
-                Dat = [int(x) for x in findall(r"\d+", Msg)]
+                SrchRst = search(":", Msg)
+                Idx = SrchRst.span()
+                DatMsg = Msg[Idx[1]:]
+                Id = Msg[:Idx[0]]
+                Dat = [int(x) for x in findall(r"\d+", DatMsg)]
 
-                if len(Id) and len(Dat):
+                if Id and Dat:
                     StrFrm = {"Id":Id, "Dat":Dat}
 
-        LogTr("Exit cStrFmtProt.DecOnce().")
-        return StrFrm, SurMsg
+        LogTr("Exit cStrFmtProt.DecInstr().")
+        return StrFrm
 
     ##
-    # @brief 字符串帧格式解析。
-    # @details 无
+    # @brief 解析数据。
+    # @details 以'\n'作为指令的结束符。
     # @param self 对象指针。
-    # Wparam Msg 解析内容。
+    # Wparam Msg 字符串类型，解析内容。
     # @return
     #   - StrFrm 字符串帧解码结果。
     #   - SurMsg 解析剩余内容。
@@ -85,24 +83,24 @@ class cStrFmtProt:
     # @attention 无
     #
     def Dec(self, Msg):
-        LogTr("Enter cStrFmtProt.Dec().")
+        LogTr("Enter cStrFmtProt.GetInstr().")
         StrFrm = {}
-        SurMsg = ""
 
-        ExtrRst, Msg = self.DecOnce(Msg)
-        if ExtrRst:
-            StrFrm[ExtrRst["Id"]] = ExtrRst["Dat"]
-            SurMsg = Msg
+        if len(Msg):
+            SrchRst = search("\n", Msg)
+            while SrchRst:
+                Idx = SrchRst.span()
+                Instr = Msg[:Idx[1]]
+                Msg = Msg[Idx[1]:]
+                InstrRst = self.DecInstr(Instr)
 
-        while ExtrRst:
-            ExtrRst, Msg = self.DecOnce(Msg)
-            if ExtrRst:
-                if ExtrRst["Id"] in StrFrm: #若Id已存在则追加数据。
-                    StrFrm[ExtrRst["Id"]] += ExtrRst["Dat"]
-                else:
-                    StrFrm[ExtrRst["Id"]] = ExtrRst["Dat"]
+                if InstrRst:
+                    if InstrRst["Id"] in StrFrm: #若Id已存在则追加数据。
+                        StrFrm[InstrRst["Id"]] += InstrRst["Dat"]
+                    else:
+                        StrFrm[InstrRst["Id"]] = InstrRst["Dat"]
 
-                SurMsg = Msg
+                SrchRst = search("\n", Msg)
 
-        LogTr("Exit cStrFmtProt.Dec().")
-        return StrFrm, SurMsg
+        LogTr("Exit cStrFmtProt.GetInstr().")
+        return StrFrm, Msg
