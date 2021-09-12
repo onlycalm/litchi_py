@@ -90,6 +90,7 @@ class cSer:
 
         try:
             self.Ser.open()
+            self.Ser.is_open = True
         except:
             raise
         LogTr("Exit cLogVw.Opn().")
@@ -135,6 +136,7 @@ class cSer:
         LogTr("Enter cLogVw.Cl().")
         try:
             self.Ser.close()
+            self.Ser.is_open = False
         except:
             raise
         LogTr("Exit cLogVw.Cl().")
@@ -151,3 +153,16 @@ class cSer:
         LogTr("Enter cLogVw.GetRecvCachLen().")
         LogTr("Exit cLogVw.GetRecvCachLen().")
         return self.Ser.inWaiting()
+
+    ##
+    # @brief 获取串口开关状态。
+    # @details 无
+    # @param self 对象指针。
+    # @return
+    # @retval True 串口开启。
+    # @retval False 串口关闭。
+    # @note 无
+    # @attention 无
+    #
+    def GetSwSta(self):
+        return self.Ser.is_open

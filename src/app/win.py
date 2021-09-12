@@ -93,10 +93,6 @@ class cMainWin:
     #
     def SerTmRecv(self):
         LogTr("Enter cMainWin.SerTmRecv().")
-        RecvLen = self.SerDri.GetRecvCachLen()
-        if RecvLen > 0:
-            RecvTxt = self.SerDri.Recv(RecvLen)
-            self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
         LogTr("Exit cMainWin.SerTmRecv().")
 
     ##
@@ -136,7 +132,7 @@ class cMainWin:
     #
     def ClkOpnPt(self):
         LogTr("Enter cMainWin.ClkOpnPt().")
-        if self.SerDri.Ser.is_open == False:
+        if self.SerDri.GetSwSta() == False:
             PtInfo = {"Port":self.MainWin.PtCmb.currentText(),
                       "BaudRate":self.MainWin.BrCmb.currentText(),
                       "ByteSize":self.MainWin.DbCmb.currentText(),
@@ -220,7 +216,7 @@ class cMainWin:
     #
     def ClkPtSnd(self):
         LogTr("Enter cMainWin.ClkPtSnd().")
-        if self.SerDri.Ser.is_open == True:
+        if self.SerDri.GetSwSta() == True:
             self.SerDri.Snd(self.MainWin.SndPtb.toPlainText().encode("Gbk"))
         LogTr("Exit cMainWin.ClkPtSnd().")
 
@@ -266,15 +262,19 @@ class cMainWin:
     #
     def WtCb(self, Id, Nm):
         LogTr("Enter cMainWin.WtCb().")
-        #Only for test.
-        #while True:
-        Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\r\nchC: 7, 8, 9\n\r"
-        Dic, SurMsg = self.StrFmtProt.Dec(Msg)
-        self.Osc.CollDat(Dic)
+        if self.SerDri.GetSwSta() == True:
+            RecvLen = self.SerDri.GetRecvCachLen()
+            if RecvLen > 0:
+                RecvTxt = self.SerDri.Recv(RecvLen)
+                self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
 
-        self.DetTw.ApdRec(["1", "1", "11", "111"])
-        self.DetTw.ApdRec(["2", "2", "22", "222"])
-        self.DetTw.ApdRec(["3", "3", "33", "333"])
+        #Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\nchC: 7, 8, 9\n"
+        #Dic, SurMsg = self.StrFmtProt.Dec(Msg)
+        #self.Osc.CollDat(Dic)
+
+        #self.DetTw.ApdRec(["1", "1", "11", "111"])
+        #self.DetTw.ApdRec(["2", "2", "22", "222"])
+        #self.DetTw.ApdRec(["3", "3", "33", "333"])
         LogTr("Exit cMainWin.WtCb().")
 
     ##

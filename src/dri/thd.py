@@ -49,7 +49,8 @@ class cThd(QThread):
     def run(self):
         LogTr("Enter cLogVw.Run().")
         if self.Cb:
-            self.Cb(self.Id, self.Nm)
+            while True:
+                self.Cb(self.Id, self.Nm)
         LogTr("Exit cLogVw.Run().")
 
     ##
