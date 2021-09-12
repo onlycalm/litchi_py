@@ -44,6 +44,8 @@ class cMainWin:
         self.MainWin = QUiLoader().load(MainWinUi)
         MainWinUi.close()
 
+        self.SerConnSta = False #串口连接状态。
+        self.InstrMsg = ""      #指令消息。
         self.SerDri = cSer()
         self.Tmr = QTimer()
         self.Osc = cOsc()
@@ -141,23 +143,16 @@ class cMainWin:
                       "XOnXOff":False, "RtsCts":False, "Write_Timeout":None,
                       "DsrDtr":False, "Inter_Byte_Timeout":None}
 
+            self.SerConnSta = True
             try:
                 self.SerDri.Opn(PtInfo)
             except:
                 QMessageBox.critical(self.MainWin, "Error", "串口打开失败")
             else:
-                self.Tmr.start(100)
                 self.SwPtFrmCmb(False)
                 self.MainWin.OpnPtPb.setStyleSheet("background-color:lightblue")
         else:
-            try:
-                self.SerDri.Cl()
-            except:
-                QMessageBox.critical(self.MainWin, "Error", "串口打开失败")
-            else:
-                self.Tmr.stop()
-                self.SwPtFrmCmb(True)
-                self.MainWin.OpnPtPb.setStyleSheet("background-color:none")
+            self.SerConnSta = False
         LogTr("Exit cMainWin.ClkOpnPt().")
 
     ##
@@ -262,15 +257,23 @@ class cMainWin:
     #
     def WtCb(self, Id, Nm):
         LogTr("Enter cMainWin.WtCb().")
+        if (self.SerConnSta == False) and (self.SerDri.GetSwSta() == True):
+            try:
+                self.SerDri.Cl()
+            except:
+                QMessageBox.critical(self.MainWin, "Error", "串口打开失败")
+            else:
+                self.SwPtFrmCmb(True)
+                self.MainWin.OpnPtPb.setStyleSheet("background-color:none")
+
         if self.SerDri.GetSwSta() == True:
             RecvLen = self.SerDri.GetRecvCachLen()
             if RecvLen > 0:
-                RecvTxt = self.SerDri.Recv(RecvLen)
-                self.MainWin.RecvTb.insertPlainText(RecvTxt.decode("Gbk"))
-
-        #Msg = "chA: 1, 2, 3\nchB: 4, 5, 6\nchC: 7, 8, 9\n"
-        #Dic, SurMsg = self.StrFmtProt.Dec(Msg)
-        #self.Osc.CollDat(Dic)
+                RecvTxt = self.SerDri.Recv(RecvLen).decode("Gbk")
+                self.MainWin.RecvTb.insertPlainText(RecvTxt)
+                self.InstrMsg += RecvTxt
+                Dic, self.InstrMsg = self.StrFmtProt.Dec(self.InstrMsg)
+                self.Osc.CollDat(Dic)
 
         #self.DetTw.ApdRec(["1", "1", "11", "111"])
         #self.DetTw.ApdRec(["2", "2", "22", "222"])
