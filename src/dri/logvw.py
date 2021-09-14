@@ -38,35 +38,6 @@ class cLogVw:
         LogTr("Exit cLogVw.__init__().")
 
     ##
-    # @brief 设置一个表格单元内容。
-    # @details 无
-    # @param self 对象指针。
-    # Wparam Row 行号。
-    # Wparam Col 列号。
-    # @param Rec 类型为字符串，内容。
-    # @return 无
-    # @note 无
-    # @attention 索引从0行0列开始
-    #
-    def SetCell(self, Row, Col, Rec):
-        LogTr("Enter cLogVw.SetCell().")
-        self.Tw.setItem(Row, Col, QTableWidgetItem(Rec))
-        LogTr("Exit cLogVw.SetCell().")
-
-    ##
-    # @brief 清空Log记录。
-    # @details 无
-    # @param self 对象指针。
-    # @return 无
-    # @note 无
-    # @attention 无
-    #
-    def ClrLog(self):
-        LogTr("Enter cLogVw.ClrLog().")
-        self.Tw.clear()
-        LogTr("Exit cLogVw.ClrLog().")
-
-    ##
     # @brief 设置行数量。
     # @details 无
     # @param self 对象指针。
@@ -93,6 +64,32 @@ class cLogVw:
         LogTr("Exit cLogVw.SetColAmt().")
 
     ##
+    # @brief 获取表格行数。
+    # @details 无
+    # @param self 对象指针。
+    # @return 行数
+    # @note 无
+    # @attention 无
+    #
+    def GetRowAmt(self):
+        LogTr("Enter cLogVw.GetRowAmt().")
+        LogTr("Exit cLogVw.GetRowAmt().")
+        return self.Tw.rowCount()
+
+    ##
+    # @brief 获取表格列数。
+    # @details 无
+    # @param self 对象指针。
+    # @return 列数
+    # @note 无
+    # @attention 无
+    #
+    def GetColAmt(self):
+        LogTr("Enter cLogVw.GetColAmt().")
+        LogTr("Exit cLogVw.GetColAmt().")
+        return self.Tw.columnCount()
+
+    ##
     # @brief 设置表格单元格背景色。
     # @details 无
     # @param self 对象指针。
@@ -111,3 +108,68 @@ class cLogVw:
         LogTr("Enter cLogVw.SetCellBgClr().")
         self.Tw.item(Row, Col).setBackground(Clr)
         LogTr("Exit cLogVw.SetCellBgClr().")
+
+    ##
+    # @brief 设置一个表格单元内容。
+    # @details 无
+    # @param self 对象指针。
+    # @param Row 行号。
+    # @param Col 列号。
+    # @param Rec 内容，类型为字符串，。
+    # @return 无
+    # @note 无
+    # @attention 索引从0行0列开始。
+    #
+    def SetCell(self, Row, Col, Rec):
+        LogTr("Enter cLogVw.SetCell().")
+        self.Tw.setItem(Row, Col, QTableWidgetItem(Rec))
+        LogTr("Exit cLogVw.SetCell().")
+
+
+    ##
+    # @brief 获取一个表格单元内容。
+    # @details 无
+    # @param self 对象指针。
+    # @param Row 行号。
+    # @param Col 列号。
+    # @return 内容，类型为字符串。
+    # @note 无
+    # @attention 索引从0行0列开始。
+    #
+    def GetCell(self, Row, Col):
+        LogTr("Enter cLogVw.SetCell().")
+        return self.Tw.item(Row, Col).text()
+        LogTr("Exit cLogVw.SetCell().")
+
+    ##
+    # @brief 添加一条Log记录。
+    # @details 往LogVw控件中添加一条Log记录。
+    # @param self 对象指针。
+    # @param Rec 一条Log记录，类型为列表。
+    # @return 无
+    # @note 无
+    # @attention 索引从0行0列开始。
+    #
+    def ApdRec(self, Rec):
+        LogTr("Enter cDetVw.ApdRec().")
+        RowAmt = self.GetRowAmt()
+        self.SetRowAmt(RowAmt + 1)
+        RecAmt = len(Rec)
+
+        if RecAmt <= self.GetColAmt():
+            for i in range(RecAmt):
+                self.SetCell(RowAmt, i, Rec[i])
+        LogTr("Exit cDetVw.ApdRec().")
+
+    ##
+    # @brief 清空Log记录。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def Clr(self):
+        LogTr("Enter cLogVw.Clr().")
+        self.Tw.clear()
+        LogTr("Exit cLogVw.Clr().")

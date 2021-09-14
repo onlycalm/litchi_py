@@ -40,7 +40,7 @@ class cDetVw:
     # @brief 添加一条检测记录。
     # @details 往DetVw控件中添加一条检测记录。
     # @param self 对象指针。
-    # @param Rec 类型为列表，一条Det记录。
+    # @param Rec 一条Det记录，类型为列表。
     # @return 无
     # @note 无
     # @attention 无
@@ -58,7 +58,7 @@ class cDetVw:
     # @note 无
     # @attention 无
     #
-    def ClrDet(self):
-        LogTr("Enter cDetVw.ClrDet().")
+    def Clr(self):
+        LogTr("Enter cDetVw.Clr().")
         self.Tw.clear()
-        LogTr("Exit cDetVw.ClrDet().")
+        LogTr("Exit cDetVw.Clr().")

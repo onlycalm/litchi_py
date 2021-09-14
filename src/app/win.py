@@ -16,7 +16,7 @@ from ser import cSer
 from grph import cOsc
 from log import *
 import numpy
-from prot import cStrFmtProt
+from prot import cStrFmtOscProt, cStrFmtLogProt
 from thd import *
 from detvw import *
 from logvw import *
@@ -44,23 +44,24 @@ class cMainWin:
         self.MainWin = QUiLoader().load(MainWinUi)
         MainWinUi.close()
 
-        self.SerConnSta = False #串口连接状态。
-        self.InstrMsg = ""      #指令消息。
+        self.SerConnSta = False   #串口连接状态。
+        self.StrFmtOscMsgBuf = "" #字符串帧Osc指令消息缓存。
+        self.StrFmtLogMsgBuf = "" #字符串帧Osc指令消息缓存。
         self.SerDri = cSer()
         self.Tmr = QTimer()
         self.Osc = cOsc()
-        self.DetTw = cDetVw(self.MainWin.DetTw)
-        self.LogTw = cLogVw(self.MainWin.LogTw)
-        self.StrFmtProt = cStrFmtProt()
+        self.DetVw = cDetVw(self.MainWin.DetTw)
+        self.LogVw = cLogVw(self.MainWin.LogTw)
+        self.StrFmtOscProt = cStrFmtOscProt()
+        self.StrFmtLogProt = cStrFmtLogProt()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
 
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.RfrCom()
-        self.LogTw.SetRowAmt(5)
 
         self.Tmr.timeout.connect(self.SerTmRecv)
-        self.DetTw.Tw.clicked.connect(self.ClkDetVw)
-        self.LogTw.Tw.clicked.connect(self.ClkLogVw)
+        self.DetVw.Tw.clicked.connect(self.ClkDetVw)
+        self.LogVw.Tw.clicked.connect(self.ClkLogVw)
         self.MainWin.AbtAct.triggered.connect(self.ClkAbtAct)
         self.MainWin.RfrComPb.clicked.connect(self.ClkRfrCom)
         self.MainWin.OpnPtPb.clicked.connect(self.ClkOpnPt)
@@ -95,6 +96,7 @@ class cMainWin:
     #
     def SerTmRecv(self):
         LogTr("Enter cMainWin.SerTmRecv().")
+        pass
         LogTr("Exit cMainWin.SerTmRecv().")
 
     ##
@@ -227,10 +229,10 @@ class cMainWin:
     def ClkDetVw(self, ClkMsg):
         LogTr("Enter cMainWin.ClkDetVw().")
         LogDbg(f"ClkMsg.row: {ClkMsg.row()}")
-        LogInf(f"{self.DetTw.Tw.currentItem().text(0)} | " +
-               f"{self.DetTw.Tw.currentItem().text(1)} | " +
-               f"{self.DetTw.Tw.currentItem().text(2)} | " +
-               f"{self.DetTw.Tw.currentItem().text(3)}")
+        LogInf(f"{self.DetVw.Tw.currentItem().text(0)} | " +
+               f"{self.DetVw.Tw.currentItem().text(1)} | " +
+               f"{self.DetVw.Tw.currentItem().text(2)} | " +
+               f"{self.DetVw.Tw.currentItem().text(3)}")
         LogTr("Exit cMainWin.ClkDetVw().")
 
     ##
@@ -245,6 +247,9 @@ class cMainWin:
     def ClkLogVw(self, ClkMsg):
         LogTr("Enter cMainWin.ClkLogVw().")
         LogDbg(f"ClkMsg.row: {ClkMsg.row()}")
+        self.MainWin.LogTb.clear()
+        for i in range(self.LogVw.GetColAmt()):
+            self.MainWin.LogTb.insertPlainText(self.LogVw.GetCell(ClkMsg.row(), i) + " ")
         LogTr("Exit cMainWin.ClkLogVw().")
 
     ##
@@ -271,13 +276,16 @@ class cMainWin:
             if RecvLen > 0:
                 RecvTxt = self.SerDri.Recv(RecvLen).decode("Gbk")
                 self.MainWin.RecvTb.insertPlainText(RecvTxt)
-                self.InstrMsg += RecvTxt
-                Dic, self.InstrMsg = self.StrFmtProt.Dec(self.InstrMsg)
-                self.Osc.CollDat(Dic)
+                self.StrFmtOscMsgBuf += RecvTxt
+                self.StrFmtLogMsgBuf += RecvTxt
+                StrFmtOscProtRes, self.StrFmtOscMsgBuf = self.StrFmtOscProt.Dec(self.StrFmtOscMsgBuf)
+                self.Osc.CollDat(StrFmtOscProtRes)
+                StrFmtLogProtRes, self.StrFmtLogMsgBuf = self.StrFmtLogProt.Dec(self.StrFmtLogMsgBuf)
+                self.AddLogRec(StrFmtLogProtRes)
 
-        #self.DetTw.ApdRec(["1", "1", "11", "111"])
-        #self.DetTw.ApdRec(["2", "2", "22", "222"])
-        #self.DetTw.ApdRec(["3", "3", "33", "333"])
+        #self.DetVw.ApdRec(["1", "1", "11", "111"])
+        #self.DetVw.ApdRec(["2", "2", "22", "222"])
+        #self.DetVw.ApdRec(["3", "3", "33", "333"])
         LogTr("Exit cMainWin.WtCb().")
 
     ##
@@ -319,3 +327,17 @@ class cMainWin:
         self.MainWin.FcCmb.setEnabled(Sw)
         self.MainWin.RfrComPb.setEnabled(Sw)
         LogTr("Exit cMainWin.SwPtFrmCmb().")
+
+    ##
+    # @brief 增加Log记录。
+    # @details 将Log记录逐条添加到LogVw中。
+    # @param self 对象指针。
+    # @param Rec Log记录，类型为列表。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def AddLogRec(self, Rec):
+        for OneRec in Rec:
+            time = QDateTime.currentDateTime() #获取当前时间。
+            self.LogVw.ApdRec([OneRec["Lv"], time.toString("yyyy-MM-dd hh:mm:ss.zzz"), OneRec["Des"]])

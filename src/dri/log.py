@@ -12,7 +12,7 @@ import sys
 from loguru import logger
 
 logger.remove(handler_id=None) #清除默认设置。
-logger.add(sys.stderr, format = "{time:YYYY-MM-DD HH:mm:ss.SSS} [{level}] {module}:{function}:{line} - {message}", level = "TRACE")
+logger.add(sys.stderr, format = "{time:YYYY-MM-DD HH:mm:ss.SSS} [{level}] {module}:{function}:{line} - {message}", level = "DEBUG")
 
 LogCrt = logger.critical #Lv50
 LogErr = logger.error    #Lv40
