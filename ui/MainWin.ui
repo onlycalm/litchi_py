@@ -480,9 +480,9 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>411</y>
+        <y>401</y>
         <width>991</width>
-        <height>111</height>
+        <height>121</height>
        </rect>
       </property>
      </widget>
@@ -492,7 +492,7 @@ p, li { white-space: pre-wrap; }
         <x>0</x>
         <y>10</y>
         <width>991</width>
-        <height>391</height>
+        <height>381</height>
        </rect>
       </property>
       <property name="lineWidth">

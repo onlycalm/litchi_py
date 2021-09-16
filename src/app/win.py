@@ -279,9 +279,13 @@ class cMainWin:
                 self.StrFmtOscMsgBuf += RecvTxt
                 self.StrFmtLogMsgBuf += RecvTxt
                 StrFmtOscProtRes, self.StrFmtOscMsgBuf = self.StrFmtOscProt.Dec(self.StrFmtOscMsgBuf)
-                self.Osc.CollDat(StrFmtOscProtRes)
+                if StrFmtOscProtRes:
+                    self.Osc.CollDat(StrFmtOscProtRes)
+
                 StrFmtLogProtRes, self.StrFmtLogMsgBuf = self.StrFmtLogProt.Dec(self.StrFmtLogMsgBuf)
-                self.AddLogRec(StrFmtLogProtRes)
+                if StrFmtLogProtRes:
+                    self.AddLogRec(StrFmtLogProtRes)
+                    self.LogVw.Tw.scrollToBottom()
 
         #self.DetVw.ApdRec(["1", "1", "11", "111"])
         #self.DetVw.ApdRec(["2", "2", "22", "222"])
@@ -330,7 +334,7 @@ class cMainWin:
 
     ##
     # @brief 增加Log记录。
-    # @details 将Log记录逐条添加到LogVw中。
+    # @details 将Log记录逐条添加到日志及LogVw中。
     # @param self 对象指针。
     # @param Rec Log记录，类型为列表。
     # @return 无
@@ -340,4 +344,5 @@ class cMainWin:
     def AddLogRec(self, Rec):
         for OneRec in Rec:
             time = QDateTime.currentDateTime() #获取当前时间。
+            LogInf("[%s] %s" % (OneRec["Lv"], OneRec["Des"]))
             self.LogVw.ApdRec([OneRec["Lv"], time.toString("yyyy-MM-dd hh:mm:ss.zzz"), OneRec["Des"]])
