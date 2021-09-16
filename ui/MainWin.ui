@@ -393,9 +393,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QTreeWidget" name="DetTw">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>0</x>
         <y>10</y>
-        <width>981</width>
+        <width>991</width>
         <height>511</height>
        </rect>
       </property>
@@ -479,9 +479,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QTextBrowser" name="LogTb">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>0</x>
         <y>411</y>
-        <width>981</width>
+        <width>991</width>
         <height>111</height>
        </rect>
       </property>
@@ -489,9 +489,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QTableWidget" name="LogTw">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>0</x>
         <y>10</y>
-        <width>981</width>
+        <width>991</width>
         <height>391</height>
        </rect>
       </property>
