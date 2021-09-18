@@ -13,9 +13,13 @@ from loguru import logger
 
 logger.remove(handler_id = None) #清除设置。
 #log输出到终端。
-logger.add(sys.stderr, format = "{time:YYYY-MM-DD HH:mm:ss.SSS} [{level}] {module}:{function}:{line} - {message}", level = "DEBUG", enqueue = True)
+logger.add(sys.stderr, format = "{time:YYYY-MM-DD HH:mm:ss.SSS} [{level}] {module}:{function}:{line} - {message}",
+           level = "DEBUG", enqueue = True)
 #log输出到文件。
-logger.add("./log/{time:YYYY-MM-DD}.log", format = "{time:YYYY-MM-DD HH:mm:ss.SSS} [{level}] {module}:{function}:{line} - {message}", level = "DEBUG", rotation = "00:00", retention = "1 months", compression = "zip", encoding = "utf-8", enqueue = True)
+logger.add("./log/{time:YYYY-MM-DD}.log",
+           format = "{time:YYYY-MM-DD HH:mm:ss.SSS} [{level}] {module}:{function}:{line} - {message}",
+           level = "DEBUG", rotation = "00:00", retention = "1 months", compression = "zip",
+           encoding = "utf-8", enqueue = True)
 
 LogCrt = logger.critical #Lv50。
 LogErr = logger.error    #Lv40。

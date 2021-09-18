@@ -38,7 +38,8 @@ class cSer:
                             "512000":512000, "600000":600000, "750000":750000, "921600":921600, "1000000":1000000,
                             "1500000":1500000, "2000000":2000000}
         self.BySzDict = {"5":serial.FIVEBITS, "6":serial.SIXBITS, "7":serial.SEVENBITS, "8":serial.EIGHTBITS}
-        self.ParDict = {"None":serial.PARITY_NONE, "Even":serial.PARITY_EVEN, "Odd":serial.PARITY_ODD, "Mark":serial.PARITY_MARK, "Space":serial.PARITY_SPACE}
+        self.ParDict = {"None":serial.PARITY_NONE, "Even":serial.PARITY_EVEN, "Odd":serial.PARITY_ODD,
+                        "Mark":serial.PARITY_MARK, "Space":serial.PARITY_SPACE}
         self.StpBitDict = {"1":serial.STOPBITS_ONE, "1.5":serial.STOPBITS_ONE_POINT_FIVE, "2":serial.STOPBITS_TWO}
         LogTr("Exit cLogVw.__init__().")
 

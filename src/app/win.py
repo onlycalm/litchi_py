@@ -56,6 +56,7 @@ class cMainWin:
         self.StrFmtLogProt = cStrFmtLogProt()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
 
+        self.LogVw.SetSelBgClr("grey")
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.RfrCom()
 
@@ -248,6 +249,7 @@ class cMainWin:
         LogTr("Enter cMainWin.ClkLogVw().")
         LogDbg(f"ClkMsg.row: {ClkMsg.row()}")
         self.MainWin.LogTb.clear()
+
         for i in range(self.LogVw.GetColAmt()):
             self.MainWin.LogTb.insertPlainText(self.LogVw.GetCell(ClkMsg.row(), i) + " ")
         LogTr("Exit cMainWin.ClkLogVw().")
@@ -285,7 +287,7 @@ class cMainWin:
                 StrFmtLogProtRes, self.StrFmtLogMsgBuf = self.StrFmtLogProt.Dec(self.StrFmtLogMsgBuf)
                 if StrFmtLogProtRes:
                     self.AddLogRec(StrFmtLogProtRes)
-                    self.LogVw.Tw.scrollToBottom()
+                    self.LogVw.Tw.scrollToBottom() #添加记录太快无法移动到最底部。
 
         #self.DetVw.ApdRec(["1", "1", "11", "111"])
         #self.DetVw.ApdRec(["2", "2", "22", "222"])
@@ -346,3 +348,4 @@ class cMainWin:
             time = QDateTime.currentDateTime() #获取当前时间。
             LogInf("[%s] %s" % (OneRec["Lv"], OneRec["Des"]))
             self.LogVw.ApdRec([OneRec["Lv"], time.toString("yyyy-MM-dd hh:mm:ss.zzz"), OneRec["Des"]])
+            self.LogVw.HlLogLv(self.LogVw.GetRowAmt() - 1, 0, OneRec["Lv"])

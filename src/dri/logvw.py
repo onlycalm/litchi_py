@@ -10,6 +10,8 @@
 
 from PySide2.QtWidgets import QTableWidget
 from PySide2.QtWidgets import QTableWidgetItem
+from PySide2.QtCore import Qt
+from PySide2.QtGui import QColor
 from log import *
 
 ##
@@ -35,6 +37,9 @@ class cLogVw:
             self.Tw = Obj
         else:
             self.Tw = QTableWidget()
+
+        self.LvClr = {"CRITICAL":QColor("#FF00FF"), "ERROR":QColor(Qt.red), "WARNING":QColor(Qt.yellow),
+                      "SUCCESS":QColor(Qt.green)}
         LogTr("Exit cLogVw.__init__().")
 
     ##
@@ -101,13 +106,31 @@ class cLogVw:
     # @attention 索引从0行0列开始。
     # @example 用法示例。
     # @code
-    #   self.Tw.SetCellBgClr(0, 1, QColor(Qt.red))
+    #   self.SetCellBgClr(0, 1, QColor(Qt.red))
     # @encode
     #
     def SetCellBgClr(self, Row, Col, Clr):
         LogTr("Enter cLogVw.SetCellBgClr().")
         self.Tw.item(Row, Col).setBackground(Clr)
         LogTr("Exit cLogVw.SetCellBgClr().")
+
+    ##
+    # @brief 选中单元格的背景颜色。
+    # @details 无
+    # @param self 对象指针。
+    # @param Clr 颜色，类型为字符串。
+    # @return 无
+    # @note 无
+    # @attention 索引从0行0列开始。
+    # @example 用法示例。
+    # @code
+    #   self.SetSelBgClr("grey")
+    # @encode
+    #
+    def SetSelBgClr(self, Clr):
+        LogTr("Enter cLogVw.SetSelBgClr().")
+        self.Tw.setStyleSheet(f"selection-background-color:{Clr};")
+        LogTr("Exit cLogVw.SetSelBgClr().")
 
     ##
     # @brief 设置一个表格单元内容。
@@ -173,3 +196,17 @@ class cLogVw:
         LogTr("Enter cLogVw.Clr().")
         self.Tw.clear()
         LogTr("Exit cLogVw.Clr().")
+
+    ##
+    # @brief 高亮Log等级。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 高亮颜色由
+    #
+    def HlLogLv(self, Row, Col, Lv):
+        LogTr("Enter cLogVw.HlLogLv().")
+        if Lv in self.LvClr:
+            self.SetCellBgClr(Row, Col, self.LvClr[Lv])
+        LogTr("Exit cLogVw.HlLogLv().")
