@@ -38,9 +38,9 @@ class cLogVw:
         else:
             self.Tw = QTableWidget()
 
-        self.LvCnt = {"CRITICAL":0, "ERROR":0, "WARNING":0, "SUCCESS":0}    #接收Log记录数。
-        self.LvClr = {"CRITICAL":QColor("#FF00FF"), "ERROR":QColor(Qt.red), #Log等级颜色。
-                      "WARNING":QColor(Qt.yellow), "SUCCESS":QColor(Qt.green)}
+        self.LvCnt = {"CRITICAL":0, "ERROR":0, "WARNING":0, "SUCCESS":0} #接收Log记录数。
+        self.LvClr = {"CRITICAL":"#FF00FF", "ERROR":"#FF0000",           #Log等级颜色。
+                      "WARNING":"#FFFF00", "SUCCESS":"#00FF00"}
         LogTr("Exit cLogVw.__init__().")
 
     ##
@@ -107,12 +107,12 @@ class cLogVw:
     # @attention 索引从0行0列开始。
     # @example 用法示例。
     # @code
-    #   self.SetCellBgClr(0, 1, QColor(Qt.red))
+    #   self.SetCellBgClr(0, 1, Qt.red)
     # @encode
     #
     def SetCellBgClr(self, Row, Col, Clr):
         LogTr("Enter cLogVw.SetCellBgClr().")
-        self.Tw.item(Row, Col).setBackground(Clr)
+        self.Tw.item(Row, Col).setBackground(QColor(Clr))
         LogTr("Exit cLogVw.SetCellBgClr().")
 
     ##
@@ -204,7 +204,7 @@ class cLogVw:
     # @param self 对象指针。
     # @return 无
     # @note 无
-    # @attention 高亮颜色由
+    # @attention 无
     #
     def HlLogLv(self, Row, Col, Lv):
         LogTr("Enter cLogVw.HlLogLv().")
@@ -212,6 +212,15 @@ class cLogVw:
             self.SetCellBgClr(Row, Col, self.LvClr[Lv])
         LogTr("Exit cLogVw.HlLogLv().")
 
+    ##
+    # @brief 对特定Log等级计数。
+    # @details 无
+    # @param self 对象指针。
+    # @param Lv Log等级，类型为字符串。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
     def CntLog(self, Lv):
         LogTr("Enter cLogVw.CntLog().")
         if Lv == "CRITICAL":
@@ -223,3 +232,21 @@ class cLogVw:
         elif Lv == "SUCCESS":
             self.LvCnt["SUCCESS"] += 1
         LogTr("Exit cLogVw.CntLog().")
+
+    ##
+    # @brief 清空Log记录和计数。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def Clr(self):
+        LogTr("Enter cLogVw.Clr().")
+        self.Tw.clear()
+        self.SetRowAmt(0)
+        self.LvCnt["CRITICAL"] = 0
+        self.LvCnt["ERROR"] = 0
+        self.LvCnt["WARNING"] = 0
+        self.LvCnt["SUCCESS"] = 0
+        LogTr("Exit cLogVw.Clr().")

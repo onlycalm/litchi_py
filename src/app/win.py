@@ -54,16 +54,22 @@ class cMainWin:
         self.LogVw = cLogVw(self.MainWin.LogTw)
         self.StrFmtOscProt = cStrFmtOscProt()
         self.StrFmtLogProt = cStrFmtLogProt()
+        self.CrtLbl = QLabel()
+        self.ErrLbl = QLabel()
+        self.WrnLbl = QLabel()
+        self.ScsLbl = QLabel()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
-        self.StsLbl = QLabel()
 
+        self.MainWin.statusbar.addWidget(self.CrtLbl)
+        self.MainWin.statusbar.addWidget(self.ErrLbl)
+        self.MainWin.statusbar.addWidget(self.WrnLbl)
+        self.MainWin.statusbar.addWidget(self.ScsLbl)
         self.MainWin.statusbar.setSizeGripEnabled(False) #取消窗口状态栏右下角三角符。
-        self.MainWin.statusbar.addWidget(self.StsLbl)
         self.LogVw.SetSelBgClr("grey")
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.RfrCom()
 
-        self.Tmr.timeout.connect(self.SerTmRecv)
+        self.Tmr.timeout.connect(self.HdlPrdTsk)
         self.DetVw.Tw.clicked.connect(self.ClkDetVw)
         self.LogVw.Tw.clicked.connect(self.ClkLogVw)
         self.MainWin.AbtAct.triggered.connect(self.ClkAbtAct)
@@ -74,7 +80,7 @@ class cMainWin:
         self.MainWin.ClrSndPb.clicked.connect(self.ClkClrSnd)
         self.MainWin.SndPb.clicked.connect(self.ClkPtSnd)
 
-        #self.Tmr.start(100)
+        self.Tmr.start(100)
         self.Thd.Strt()
         LogTr("Exit cMainWin.__init__().")
 
@@ -92,16 +98,18 @@ class cMainWin:
         LogTr("Exit cMainWin.show().")
 
     ##
-    # @brief 串口定时接收。
+    # @brief 定时处理。
     # @details 根据Tmr的时间设置，周期性调用。
     # @param self 对象指针。
     # @return 无
     # @note 无
     # @attention 无
     #
-    def SerTmRecv(self):
-        LogTr("Enter cMainWin.SerTmRecv().")
-        LogTr("Exit cMainWin.SerTmRecv().")
+    def HdlPrdTsk(self):
+        LogTr("Enter cMainWin.HdlPrdTsk().")
+        self.SetLogSta(self.LogVw.LvCnt["CRITICAL"], self.LogVw.LvCnt["ERROR"],
+                    self.LogVw.LvCnt["WARNING"], self.LogVw.LvCnt["SUCCESS"])
+        LogTr("Exit cMainWin.HdlPrdTsk().")
 
     ##
     # @brief 点击关于动作。
@@ -292,8 +300,6 @@ class cMainWin:
                     self.AddLogRec(StrFmtLogProtRes)
                     self.LogVw.Tw.scrollToBottom() #添加记录太快无法移动到最底部。
 
-        self.SetSts(self.LogVw.LvCnt["CRITICAL"], self.LogVw.LvCnt["ERROR"],
-                    self.LogVw.LvCnt["WARNING"], self.LogVw.LvCnt["SUCCESS"])
         #self.DetVw.ApdRec(["1", "1", "11", "111"])
         #self.DetVw.ApdRec(["2", "2", "22", "222"])
         #self.DetVw.ApdRec(["3", "3", "33", "333"])
@@ -359,14 +365,41 @@ class cMainWin:
         LogTr("Exit cMainWin.AddLogRec().")
 
     ##
-    # @brief 设置状态栏。
+    # @brief 设置Log状态。
     # @details 设置状态栏的显示内容。
     # @param self 对象指针。
     # @return 无
     # @note 无
     # @attention 无
     #
-    def SetSts(self, CrtLogCnt, ErrLogCnt, WrnLogCnt, ScsLogCnt):
-        LogTr("Enter cMainWin.SetSts().")
-        self.StsLbl.setText("CRT: %5d, ERR: %5d, WRN: %5d, SCS: %5d" % (CrtLogCnt, ErrLogCnt, WrnLogCnt, ScsLogCnt))
-        LogTr("Exit cMainWin.SetSts().")
+    def SetLogSta(self, CrtLogCnt, ErrLogCnt, WrnLogCnt, ScsLogCnt):
+        LogTr("Enter cMainWin.SetLogSta().")
+        self.CrtLbl.setText("CRT: %5d" % (CrtLogCnt))
+        self.ErrLbl.setText("ERR: %5d" % (ErrLogCnt))
+        self.WrnLbl.setText("WRN: %5d" % (WrnLogCnt))
+        self.ScsLbl.setText("SCS: %5d" % (ScsLogCnt))
+
+        if CrtLogCnt != 0:
+            Clr = self.LogVw.LvClr["CRITICAL"]
+            self.CrtLbl.setStyleSheet(f"background-color:{Clr};")
+        else:
+            self.CrtLbl.setStyleSheet("background-color:none;")
+
+        if ErrLogCnt != 0:
+            Clr = self.LogVw.LvClr["ERROR"]
+            self.ErrLbl.setStyleSheet(f"background-color:{Clr};")
+        else:
+            self.ErrLbl.setStyleSheet("background-color:none;")
+
+        if WrnLogCnt != 0:
+            Clr = self.LogVw.LvClr["WARNING"]
+            self.WrnLbl.setStyleSheet(f"background-color:{Clr};")
+        else:
+            self.WrnLbl.setStyleSheet("background-color:none;")
+
+        if ScsLogCnt != 0:
+            Clr = self.LogVw.LvClr["SUCCESS"]
+            self.ScsLbl.setStyleSheet(f"background-color:{Clr};")
+        else:
+            self.ScsLbl.setStyleSheet("background-color:none;")
+        LogTr("Exit cMainWin.SetLogSta().")
