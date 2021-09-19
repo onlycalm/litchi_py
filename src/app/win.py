@@ -10,7 +10,7 @@
 
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer, Qt
-from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget
+from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget, QLabel
 from PySide2.QtGui import QIcon, QColor
 from ser import cSer
 from grph import cOsc
@@ -55,7 +55,10 @@ class cMainWin:
         self.StrFmtOscProt = cStrFmtOscProt()
         self.StrFmtLogProt = cStrFmtLogProt()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
+        self.StsLbl = QLabel()
 
+        self.MainWin.statusbar.setSizeGripEnabled(False) #取消窗口状态栏右下角三角符。
+        self.MainWin.statusbar.addWidget(self.StsLbl)
         self.LogVw.SetSelBgClr("grey")
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.RfrCom()
@@ -71,6 +74,7 @@ class cMainWin:
         self.MainWin.ClrSndPb.clicked.connect(self.ClkClrSnd)
         self.MainWin.SndPb.clicked.connect(self.ClkPtSnd)
 
+        #self.Tmr.start(100)
         self.Thd.Strt()
         LogTr("Exit cMainWin.__init__().")
 
@@ -97,7 +101,6 @@ class cMainWin:
     #
     def SerTmRecv(self):
         LogTr("Enter cMainWin.SerTmRecv().")
-        pass
         LogTr("Exit cMainWin.SerTmRecv().")
 
     ##
@@ -289,6 +292,8 @@ class cMainWin:
                     self.AddLogRec(StrFmtLogProtRes)
                     self.LogVw.Tw.scrollToBottom() #添加记录太快无法移动到最底部。
 
+        self.SetSts(self.LogVw.LvCnt["CRITICAL"], self.LogVw.LvCnt["ERROR"],
+                    self.LogVw.LvCnt["WARNING"], self.LogVw.LvCnt["SUCCESS"])
         #self.DetVw.ApdRec(["1", "1", "11", "111"])
         #self.DetVw.ApdRec(["2", "2", "22", "222"])
         #self.DetVw.ApdRec(["3", "3", "33", "333"])
@@ -344,8 +349,24 @@ class cMainWin:
     # @attention 无
     #
     def AddLogRec(self, Rec):
+        LogTr("Enter cMainWin.AddLogRec().")
         for OneRec in Rec:
             time = QDateTime.currentDateTime() #获取当前时间。
             LogInf("[%s] %s" % (OneRec["Lv"], OneRec["Des"]))
             self.LogVw.ApdRec([OneRec["Lv"], time.toString("yyyy-MM-dd hh:mm:ss.zzz"), OneRec["Des"]])
             self.LogVw.HlLogLv(self.LogVw.GetRowAmt() - 1, 0, OneRec["Lv"])
+            self.LogVw.CntLog(OneRec["Lv"])
+        LogTr("Exit cMainWin.AddLogRec().")
+
+    ##
+    # @brief 设置状态栏。
+    # @details 设置状态栏的显示内容。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def SetSts(self, CrtLogCnt, ErrLogCnt, WrnLogCnt, ScsLogCnt):
+        LogTr("Enter cMainWin.SetSts().")
+        self.StsLbl.setText("CRT: %5d, ERR: %5d, WRN: %5d, SCS: %5d" % (CrtLogCnt, ErrLogCnt, WrnLogCnt, ScsLogCnt))
+        LogTr("Exit cMainWin.SetSts().")

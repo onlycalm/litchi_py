@@ -103,7 +103,13 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QComboBox" name="PtCmb"/>
+         <widget class="QComboBox" name="PtCmb">
+          <item>
+           <property name="text">
+            <string>COM8</string>
+           </property>
+          </item>
+         </widget>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="SbLbl">

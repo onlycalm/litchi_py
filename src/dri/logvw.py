@@ -38,8 +38,9 @@ class cLogVw:
         else:
             self.Tw = QTableWidget()
 
-        self.LvClr = {"CRITICAL":QColor("#FF00FF"), "ERROR":QColor(Qt.red), "WARNING":QColor(Qt.yellow),
-                      "SUCCESS":QColor(Qt.green)}
+        self.LvCnt = {"CRITICAL":0, "ERROR":0, "WARNING":0, "SUCCESS":0}    #接收Log记录数。
+        self.LvClr = {"CRITICAL":QColor("#FF00FF"), "ERROR":QColor(Qt.red), #Log等级颜色。
+                      "WARNING":QColor(Qt.yellow), "SUCCESS":QColor(Qt.green)}
         LogTr("Exit cLogVw.__init__().")
 
     ##
@@ -210,3 +211,15 @@ class cLogVw:
         if Lv in self.LvClr:
             self.SetCellBgClr(Row, Col, self.LvClr[Lv])
         LogTr("Exit cLogVw.HlLogLv().")
+
+    def CntLog(self, Lv):
+        LogTr("Enter cLogVw.CntLog().")
+        if Lv == "CRITICAL":
+            self.LvCnt["CRITICAL"] += 1
+        elif Lv == "ERROR":
+            self.LvCnt["ERROR"] += 1
+        elif Lv == "WARNING":
+            self.LvCnt["WARNING"] += 1
+        elif Lv == "SUCCESS":
+            self.LvCnt["SUCCESS"] += 1
+        LogTr("Exit cLogVw.CntLog().")
