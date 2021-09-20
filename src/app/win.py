@@ -9,7 +9,7 @@
 #
 
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer, Qt
+from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer, Qt, QObject, Signal
 from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget, QLabel
 from PySide2.QtGui import QIcon, QColor
 from ser import cSer
@@ -28,7 +28,10 @@ from logvw import *
 # @note 无
 # @attention 无
 #
-class cMainWin:
+class cMainWin(QObject):
+    RecvTbSgn = Signal()
+    LogVwSgn = Signal()
+
     ##
     # @brief 构造函数。
     # @details 无
@@ -39,6 +42,7 @@ class cMainWin:
     #
     def __init__(self):
         LogTr("Enter cMainWin.__init__().")
+        super(cMainWin, self).__init__()
         MainWinUi = QFile("ui/MainWin.ui")
         MainWinUi.open(QIODevice.ReadOnly)
         self.MainWin = QUiLoader().load(MainWinUi)
@@ -60,6 +64,8 @@ class cMainWin:
         self.ScsLbl = QLabel()
         self.Thd = cThd(1, "HdlDat", self.WtCb)
 
+        self.LogVwSgn.connect(self.RfrLogVw)
+        self.RecvTbSgn.connect(self.RfrRecvTb)
         self.MainWin.statusbar.addWidget(self.CrtLbl)
         self.MainWin.statusbar.addWidget(self.ErrLbl)
         self.MainWin.statusbar.addWidget(self.WrnLbl)
@@ -289,6 +295,7 @@ class cMainWin:
             if RecvLen > 0:
                 RecvTxt = self.SerDri.Recv(RecvLen).decode("Gbk")
                 self.MainWin.RecvTb.insertPlainText(RecvTxt)
+                self.RecvTbSgn.emit()
                 self.StrFmtOscMsgBuf += RecvTxt
                 self.StrFmtLogMsgBuf += RecvTxt
                 StrFmtOscProtRes, self.StrFmtOscMsgBuf = self.StrFmtOscProt.Dec(self.StrFmtOscMsgBuf)
@@ -298,7 +305,7 @@ class cMainWin:
                 StrFmtLogProtRes, self.StrFmtLogMsgBuf = self.StrFmtLogProt.Dec(self.StrFmtLogMsgBuf)
                 if StrFmtLogProtRes:
                     self.AddLogRec(StrFmtLogProtRes)
-                    self.LogVw.Tw.scrollToBottom() #添加记录太快无法移动到最底部。
+                    self.LogVwSgn.emit()
 
         #self.DetVw.ApdRec(["1", "1", "11", "111"])
         #self.DetVw.ApdRec(["2", "2", "22", "222"])
@@ -403,3 +410,30 @@ class cMainWin:
         else:
             self.ScsLbl.setStyleSheet("background-color:none;")
         LogTr("Exit cMainWin.SetLogSta().")
+
+    ##
+    # @brief 刷新LogVw控件。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def RfrLogVw(self):
+        LogTr("Enter cMainWin.RfrLogVw().")
+        self.LogVw.Tw.scrollToBottom() #子线程中调用不能到达底部。
+        LogTr("Exit cMainWin.RfrLogVw().")
+
+    ##
+    # @brief 刷新RecvTb控件。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def RfrRecvTb(self):
+        LogTr("Enter cMainWin.RfrLogVw().")
+        ScrBar = self.MainWin.RecvTb.verticalScrollBar()
+        ScrBar.setValue(ScrBar.maximum())
+        LogTr("Exit cMainWin.RfrLogVw().")
