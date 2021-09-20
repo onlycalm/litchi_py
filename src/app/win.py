@@ -381,10 +381,10 @@ class cMainWin(QObject):
     #
     def SetLogSta(self, CrtLogCnt, ErrLogCnt, WrnLogCnt, ScsLogCnt):
         LogTr("Enter cMainWin.SetLogSta().")
-        self.CrtLbl.setText("CRT: %5d" % (CrtLogCnt))
-        self.ErrLbl.setText("ERR: %5d" % (ErrLogCnt))
-        self.WrnLbl.setText("WRN: %5d" % (WrnLogCnt))
-        self.ScsLbl.setText("SCS: %5d" % (ScsLogCnt))
+        self.CrtLbl.setText("CRT:%-5d" % (CrtLogCnt))
+        self.ErrLbl.setText("ERR:%-5d" % (ErrLogCnt))
+        self.WrnLbl.setText("WRN:%-5d" % (WrnLogCnt))
+        self.ScsLbl.setText("SCS:%-5d" % (ScsLogCnt))
 
         if CrtLogCnt != 0:
             Clr = self.LogVw.LvClr["CRITICAL"]
