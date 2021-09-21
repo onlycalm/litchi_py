@@ -264,11 +264,18 @@ class cMainWin(QObject):
     #
     def ClkLogVw(self, ClkMsg):
         LogTr("Enter cMainWin.ClkLogVw().")
-        LogDbg(f"ClkMsg.row: {ClkMsg.row()}")
-        self.MainWin.LogTb.clear()
+        SelRowNum = ClkMsg.row()
 
+        #if self.LogVw.GetCell(SelRowNum, 0) in self.LogVw.LvClr:
+        #    self.LogVw.SetSelBgClr(self.LogVw.LvClr[self.LogVw.GetCell(SelRowNum, 0)])
+        #else:
+        #    self.LogVw.SetSelBgClr("grey")
+
+        SelRowStr = ""
         for i in range(self.LogVw.GetColAmt()):
-            self.MainWin.LogTb.insertPlainText(self.LogVw.GetCell(ClkMsg.row(), i) + " ")
+            SelRowStr += self.LogVw.GetCell(SelRowNum, i) + " "
+        self.MainWin.LogTb.setPlainText(SelRowStr)
+        LogInf(f"SelRowNum: {SelRowNum}. {self.MainWin.LogTb.document().toPlainText()}")
         LogTr("Exit cMainWin.ClkLogVw().")
 
     ##
@@ -432,9 +439,9 @@ class cMainWin(QObject):
     # @attention 无
     #
     def RfrRecvTb(self, RecvStr):
-        LogTr("Enter cMainWin.RfrLogVw().")
+        LogTr("Enter cMainWin.RfrRecvTb().")
         self.MainWin.RecvTb.moveCursor(self.MainWin.RecvTb.textCursor().End) #光标移动到末后插入。
         self.MainWin.RecvTb.insertPlainText(RecvStr)                         #append会插入换行。
         ScrBar = self.MainWin.RecvTb.verticalScrollBar()
         ScrBar.setValue(ScrBar.maximum())
-        LogTr("Exit cMainWin.RfrLogVw().")
+        LogTr("Exit cMainWin.RfrRecvTb().")
