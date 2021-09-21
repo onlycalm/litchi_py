@@ -30,13 +30,26 @@ class cThd(QThread):
     # @note 无
     # @attention 无
     #
-    def __init__(self, Id, Nm, Cb):
+    def __init__(self, Id, Nm, Cb = None):
         LogTr("Enter cLogVw.__init__().")
         QThread.__init__(self)
         self.Id = Id
         self.Nm = Nm
         self.Cb = Cb
         LogTr("Exit cLogVw.__init__().")
+
+    ##
+    # @brief 线程执行入口函数。
+    # @details 启动线程后将会首先调用该函数。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 该函数内部将调用线程回调函数。
+    #
+    def ConnCb(self, Cb):
+        LogTr("Enter cLogVw.ConnCb().")
+        self.Cb = Cb
+        LogTr("Exit cLogVw.ConnCb().")
 
     ##
     # @brief 线程执行入口函数。

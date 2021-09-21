@@ -207,7 +207,7 @@ class cOsc:
     # @brief 采集数据。
     # @details 将采集的数据添加到示波器中显示。如果Id不存在则新建。在曲线之后新增点。
     # @param self 对象指针。
-    # @param Dat 为字典型，待处理数据。
+    # @param Dat 待处理数据，为字典型。
     # @return 无
     # @note 无
     # @attention 无
