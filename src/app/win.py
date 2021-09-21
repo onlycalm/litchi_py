@@ -11,7 +11,7 @@
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer, Qt, QObject, Signal
 from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget, QLabel
-from PySide2.QtGui import QIcon, QColor
+from PySide2.QtGui import QIcon, QColor, QTextCursor
 from ser import cSer
 from grph import cOsc
 from log import *
@@ -29,7 +29,7 @@ from logvw import *
 # @attention 无
 #
 class cMainWin(QObject):
-    RecvTbSgn = Signal()
+    RecvTbSgn = Signal(str)
     LogVwSgn = Signal()
 
     ##
@@ -293,11 +293,10 @@ class cMainWin(QObject):
         if self.SerDri.GetSwSta() == True:
             RecvLen = self.SerDri.GetRecvCachLen()
             if RecvLen > 0:
-                RecvTxt = self.SerDri.Recv(RecvLen).decode("Gbk")
-                self.MainWin.RecvTb.insertPlainText(RecvTxt)
-                self.RecvTbSgn.emit()
-                self.StrFmtOscMsgBuf += RecvTxt
-                self.StrFmtLogMsgBuf += RecvTxt
+                RecvStr = self.SerDri.Recv(RecvLen).decode("Gbk")
+                self.RecvTbSgn.emit(RecvStr)
+                self.StrFmtOscMsgBuf += RecvStr
+                self.StrFmtLogMsgBuf += RecvStr
                 StrFmtOscProtRes, self.StrFmtOscMsgBuf = self.StrFmtOscProt.Dec(self.StrFmtOscMsgBuf)
                 if StrFmtOscProtRes:
                     self.Osc.CollDat(StrFmtOscProtRes)
@@ -432,8 +431,10 @@ class cMainWin(QObject):
     # @note 无
     # @attention 无
     #
-    def RfrRecvTb(self):
+    def RfrRecvTb(self, RecvStr):
         LogTr("Enter cMainWin.RfrLogVw().")
+        self.MainWin.RecvTb.moveCursor(self.MainWin.RecvTb.textCursor().End) #光标移动到末后插入。
+        self.MainWin.RecvTb.insertPlainText(RecvStr)                         #append会插入换行。
         ScrBar = self.MainWin.RecvTb.verticalScrollBar()
         ScrBar.setValue(ScrBar.maximum())
         LogTr("Exit cMainWin.RfrLogVw().")
