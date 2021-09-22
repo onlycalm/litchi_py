@@ -70,7 +70,8 @@ class cMainWin(QObject):
         self.MainWin.statusbar.addWidget(self.ErrLbl)
         self.MainWin.statusbar.addWidget(self.WrnLbl)
         self.MainWin.statusbar.addWidget(self.ScsLbl)
-        self.MainWin.statusbar.setSizeGripEnabled(False) #取消窗口状态栏右下角三角符。
+        self.MainWin.statusbar.setSizeGripEnabled(False)                       #取消窗口右下角三角符。
+        self.MainWin.setFixedSize(self.MainWin.width(), self.MainWin.height()) #禁用窗口拉伸及最大化按钮。
         self.LogVw.SetSelBgClr("grey")
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.RfrCom()
