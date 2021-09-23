@@ -169,7 +169,7 @@ class cStrFmtLogProt:
     # @param self 对象指针。
     # @param Msg 字符串类型，解析内容。
     # @return
-    #   - StrFrm 类型为列表，字符串帧Log解码结果。
+    #   - StrFrm 字符串帧Log解码结果，类型为列表。
     #   - SurMsg 解析剩余内容。
     # @note 无
     # @attention 无

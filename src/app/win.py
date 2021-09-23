@@ -62,7 +62,7 @@ class cMainWin(QObject):
         self.ErrLbl = QLabel()
         self.WrnLbl = QLabel()
         self.ScsLbl = QLabel()
-        self.Thd = cThd(1, "HdlDat", self.WtCb)
+        self.Thd = cThd(1, "HdlDat")
 
         self.LogVwSgn.connect(self.RfrLogVw)
         self.RecvTbSgn.connect(self.RfrRecvTb)
@@ -76,6 +76,7 @@ class cMainWin(QObject):
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.RfrCom()
 
+        self.Thd.ConnCb(self.WtCb)
         self.Tmr.timeout.connect(self.HdlPrdTsk)
         self.DetVw.Tw.clicked.connect(self.ClkDetVw)
         self.LogVw.Tw.clicked.connect(self.ClkLogVw)
