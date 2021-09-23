@@ -10,7 +10,7 @@
 
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer, Qt, QObject, Signal
-from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget, QLabel
+from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget, QLabel, QMenu
 from PySide2.QtGui import QIcon, QColor, QTextCursor
 from ser import cSer
 from grph import cOsc
@@ -20,6 +20,7 @@ from prot import cStrFmtOscProt, cStrFmtLogProt
 from thd import *
 from detvw import *
 from logvw import *
+from led import *
 
 ##
 # @class cMainWin
@@ -58,18 +59,18 @@ class cMainWin(QObject):
         self.LogVw = cLogVw(self.MainWin.LogTw)
         self.StrFmtOscProt = cStrFmtOscProt()
         self.StrFmtLogProt = cStrFmtLogProt()
-        self.CrtLbl = QLabel()
-        self.ErrLbl = QLabel()
-        self.WrnLbl = QLabel()
-        self.ScsLbl = QLabel()
+        self.CrtLed = cLed(Clr = self.LogVw.LvClr["CRITICAL"])
+        self.ErrLed = cLed(Clr = self.LogVw.LvClr["ERROR"])
+        self.WrnLed = cLed(Clr = self.LogVw.LvClr["WARNING"])
+        self.ScsLed = cLed(Clr = self.LogVw.LvClr["SUCCESS"])
         self.Thd = cThd(1, "HdlDat")
 
         self.LogVwSgn.connect(self.RfrLogVw)
         self.RecvTbSgn.connect(self.RfrRecvTb)
-        self.MainWin.statusbar.addWidget(self.CrtLbl)
-        self.MainWin.statusbar.addWidget(self.ErrLbl)
-        self.MainWin.statusbar.addWidget(self.WrnLbl)
-        self.MainWin.statusbar.addWidget(self.ScsLbl)
+        self.MainWin.statusbar.addWidget(self.CrtLed.Lbl)
+        self.MainWin.statusbar.addWidget(self.ErrLed.Lbl)
+        self.MainWin.statusbar.addWidget(self.WrnLed.Lbl)
+        self.MainWin.statusbar.addWidget(self.ScsLed.Lbl)
         self.MainWin.statusbar.setSizeGripEnabled(False)                       #取消窗口右下角三角符。
         self.MainWin.setFixedSize(self.MainWin.width(), self.MainWin.height()) #禁用窗口拉伸及最大化按钮。
         self.LogVw.SetSelBgClr("grey")
@@ -389,34 +390,30 @@ class cMainWin(QObject):
     #
     def SetLogSta(self, CrtLogCnt, ErrLogCnt, WrnLogCnt, ScsLogCnt):
         LogTr("Enter cMainWin.SetLogSta().")
-        self.CrtLbl.setText("CRT:%-5d" % (CrtLogCnt))
-        self.ErrLbl.setText("ERR:%-5d" % (ErrLogCnt))
-        self.WrnLbl.setText("WRN:%-5d" % (WrnLogCnt))
-        self.ScsLbl.setText("SCS:%-5d" % (ScsLogCnt))
+        self.CrtLed.SetStr("CRT:%-5d" % (CrtLogCnt))
+        self.ErrLed.SetStr("ERR:%-5d" % (ErrLogCnt))
+        self.WrnLed.SetStr("WRN:%-5d" % (WrnLogCnt))
+        self.ScsLed.SetStr("SCS:%-5d" % (ScsLogCnt))
 
         if CrtLogCnt != 0:
-            Clr = self.LogVw.LvClr["CRITICAL"]
-            self.CrtLbl.setStyleSheet(f"background-color:{Clr};")
+            self.CrtLed.Sw(True)
         else:
-            self.CrtLbl.setStyleSheet("background-color:none;")
+            self.CrtLed.Sw(False)
 
         if ErrLogCnt != 0:
-            Clr = self.LogVw.LvClr["ERROR"]
-            self.ErrLbl.setStyleSheet(f"background-color:{Clr};")
+            self.ErrLed.Sw(True)
         else:
-            self.ErrLbl.setStyleSheet("background-color:none;")
+            self.ErrLed.Sw(False)
 
         if WrnLogCnt != 0:
-            Clr = self.LogVw.LvClr["WARNING"]
-            self.WrnLbl.setStyleSheet(f"background-color:{Clr};")
+            self.WrnLed.Sw(True)
         else:
-            self.WrnLbl.setStyleSheet("background-color:none;")
+            self.WrnLed.Sw(False)
 
         if ScsLogCnt != 0:
-            Clr = self.LogVw.LvClr["SUCCESS"]
-            self.ScsLbl.setStyleSheet(f"background-color:{Clr};")
+            self.ScsLed.Sw(True)
         else:
-            self.ScsLbl.setStyleSheet("background-color:none;")
+            self.ScsLed.Sw(False)
         LogTr("Exit cMainWin.SetLogSta().")
 
     ##

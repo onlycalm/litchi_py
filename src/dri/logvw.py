@@ -196,6 +196,11 @@ class cLogVw:
     def Clr(self):
         LogTr("Enter cLogVw.Clr().")
         self.Tw.clear()
+        self.SetRowAmt(0)
+        self.LvCnt["CRITICAL"] = 0
+        self.LvCnt["ERROR"] = 0
+        self.LvCnt["WARNING"] = 0
+        self.LvCnt["SUCCESS"] = 0
         LogTr("Exit cLogVw.Clr().")
 
     ##
@@ -232,21 +237,3 @@ class cLogVw:
         elif Lv == "SUCCESS":
             self.LvCnt["SUCCESS"] += 1
         LogTr("Exit cLogVw.CntLog().")
-
-    ##
-    # @brief 清空Log记录和计数。
-    # @details 无
-    # @param self 对象指针。
-    # @return 无
-    # @note 无
-    # @attention 无
-    #
-    def Clr(self):
-        LogTr("Enter cLogVw.Clr().")
-        self.Tw.clear()
-        self.SetRowAmt(0)
-        self.LvCnt["CRITICAL"] = 0
-        self.LvCnt["ERROR"] = 0
-        self.LvCnt["WARNING"] = 0
-        self.LvCnt["SUCCESS"] = 0
-        LogTr("Exit cLogVw.Clr().")
