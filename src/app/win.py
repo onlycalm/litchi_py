@@ -11,6 +11,7 @@
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile, QIODevice, QDateTime, QTimer, Qt, QObject, Signal
 from PySide2.QtWidgets import QAction, QMessageBox, QFileDialog, QTextBrowser, QTreeWidget, QTableWidget, QLabel, QMenu
+from PySide2.QtWidgets import QCheckBox
 from PySide2.QtGui import QIcon, QColor, QTextCursor
 from ser import cSer
 from grph import cOsc
@@ -88,6 +89,15 @@ class cMainWin(QObject):
         self.MainWin.ClrRecvPb.clicked.connect(self.ClkClrRecv)
         self.MainWin.ClrSndPb.clicked.connect(self.ClkClrSnd)
         self.MainWin.SndPb.clicked.connect(self.ClkPtSnd)
+        self.MainWin.ScrLogCrtChk.clicked.connect(self.ClkScrLogCrt)
+        self.MainWin.ScrLogErrChk.clicked.connect(self.ClkScrLogErr)
+        self.MainWin.ScrLogWrnChk.clicked.connect(self.ClkScrLogWrn)
+        self.MainWin.ScrLogScsChk.clicked.connect(self.ClkScrLogScs)
+        self.MainWin.ScrLogInfChk.clicked.connect(self.ClkScrLogInf)
+        self.MainWin.ScrLogDbgChk.clicked.connect(self.ClkScrLogDbg)
+        self.MainWin.ScrLogTrChk.clicked.connect(self.ClkScrLogTr)
+        self.MainWin.ScrLogAllChk.clicked.connect(self.ClkScrLogAll)
+        self.MainWin.ClrLogPb.clicked.connect(self.ClkClrLog)
 
         self.Tmr.start(100)
         self.Thd.Strt()
@@ -280,6 +290,202 @@ class cMainWin(QObject):
         self.MainWin.LogTb.setPlainText(SelRowStr)
         LogInf(f"SelRowNum: {SelRowNum}. {self.MainWin.LogTb.document().toPlainText()}")
         LogTr("Exit cMainWin.ClkLogVw().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 无。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无。
+    #
+    def ClkScrLogCrt(self):
+        LogTr("Enter cMainWin.ClkScrLogCrt().")
+        if self.MainWin.ScrLogCrtChk.isChecked():
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogAllChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogCrt().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 无。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无。
+    #
+    def ClkScrLogErr(self):
+        LogTr("Enter cMainWin.ClkScrLogErr().")
+        if self.MainWin.ScrLogErrChk.isChecked():
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogAllChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogErr().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 无。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无。
+    #
+    def ClkScrLogWrn(self):
+        LogTr("Enter cMainWin.ClkScrLogWrn().")
+        if self.MainWin.ScrLogWrnChk.isChecked():
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogAllChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogWrn().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 无。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无。
+    #
+    def ClkScrLogScs(self):
+        LogTr("Enter cMainWin.ClkScrLogScs().")
+        if self.MainWin.ScrLogScsChk.isChecked():
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogAllChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogScs().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 无。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无。
+    #
+    def ClkScrLogInf(self):
+        LogTr("Enter cMainWin.ClkScrLogInf().")
+        if self.MainWin.ScrLogInfChk.isChecked():
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogAllChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogInf().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 无。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无。
+    #
+    def ClkScrLogDbg(self):
+        LogTr("Enter cMainWin.ClkScrLogDbg().")
+        if self.MainWin.ScrLogDbgChk.isChecked():
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogAllChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogDbg().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 无。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无。
+    #
+    def ClkScrLogTr(self):
+        LogTr("Enter cMainWin.ClkScrLogTr().")
+        if self.MainWin.ScrLogTrChk.isChecked():
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogAllChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogTr().")
+
+    ##
+    # @brief CheckBox点击事件。
+    # @details 选中时触发同时选中所有复选框。
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 与其他复选框互斥。
+    #
+    def ClkScrLogAll(self):
+        LogTr("Enter cMainWin.ClkScrLogAll().")
+        if self.MainWin.ScrLogAllChk.isChecked():
+            self.MainWin.ScrLogCrtChk.setChecked(True)
+            self.MainWin.ScrLogErrChk.setChecked(True)
+            self.MainWin.ScrLogWrnChk.setChecked(True)
+            self.MainWin.ScrLogScsChk.setChecked(True)
+            self.MainWin.ScrLogInfChk.setChecked(True)
+            self.MainWin.ScrLogDbgChk.setChecked(True)
+            self.MainWin.ScrLogTrChk.setChecked(True)
+        else:
+            if self.IsSelAllScrLogChk():
+                self.MainWin.ScrLogCrtChk.setChecked(False)
+                self.MainWin.ScrLogErrChk.setChecked(False)
+                self.MainWin.ScrLogWrnChk.setChecked(False)
+                self.MainWin.ScrLogScsChk.setChecked(False)
+                self.MainWin.ScrLogInfChk.setChecked(False)
+                self.MainWin.ScrLogDbgChk.setChecked(False)
+                self.MainWin.ScrLogTrChk.setChecked(False)
+
+        LogTr("Exit cMainWin.ClkScrLogAll().")
+
+    ##
+    # @brief 清空Log点击事件。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def ClkClrLog(self):
+        LogTr("Enter cMainWin.ClkClrLog().")
+        self.LogVw.Clr()
+        self.MainWin.LogTb.clear()
+        LogTr("Exit cMainWin.ClkClrLog().")
+
+    ##
+    # @brief 是否选中了所有筛选Log复选框。
+    # @details 无
+    # @param 无
+    # @return 是否全选。
+    # @note 无
+    # @attention 无
+    #
+    def IsSelAllScrLog(self):
+        LogTr("Enter cMainWin.IsSelAllScrLog().")
+        Rtn = False
+
+        if self.MainWin.ScrLogCrtChk.isChecked() and \
+           self.MainWin.ScrLogErrChk.isChecked() and \
+           self.MainWin.ScrLogWrnChk.isChecked() and \
+           self.MainWin.ScrLogScsChk.isChecked() and \
+           self.MainWin.ScrLogInfChk.isChecked() and \
+           self.MainWin.ScrLogDbgChk.isChecked() and \
+           self.MainWin.ScrLogTrChk.isChecked():
+           Rtn = True
+        else:
+           Rtn = False
+
+        LogTr("Exit cMainWin.IsSelAllScrLog().")
+        return Rtn
 
     ##
     # @brief 辅助线程回调函数。

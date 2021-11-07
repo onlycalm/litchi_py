@@ -195,7 +195,6 @@ class cLogVw:
     #
     def Clr(self):
         LogTr("Enter cLogVw.Clr().")
-        self.Tw.clear()
         self.SetRowAmt(0)
         self.LvCnt["CRITICAL"] = 0
         self.LvCnt["ERROR"] = 0
