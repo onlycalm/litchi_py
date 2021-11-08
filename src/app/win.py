@@ -469,8 +469,8 @@ class cMainWin(QObject):
     # @note 无
     # @attention 无
     #
-    def IsSelAllScrLog(self):
-        LogTr("Enter cMainWin.IsSelAllScrLog().")
+    def IsSelAllScrLogChk(self):
+        LogTr("Enter cMainWin.IsSelAllScrLogChk().")
         Rtn = False
 
         if self.MainWin.ScrLogCrtChk.isChecked() and \
@@ -484,7 +484,7 @@ class cMainWin(QObject):
         else:
            Rtn = False
 
-        LogTr("Exit cMainWin.IsSelAllScrLog().")
+        LogTr("Exit cMainWin.IsSelAllScrLogChk().")
         return Rtn
 
     ##

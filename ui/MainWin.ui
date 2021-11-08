@@ -611,6 +611,9 @@ p, li { white-space: pre-wrap; }
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="1">
          <widget class="QCheckBox" name="ScrLogWrnChk">
+          <property name="toolTip">
+           <string>筛选WARNING等级Log</string>
+          </property>
           <property name="text">
            <string>WARNING</string>
           </property>
@@ -618,6 +621,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="3" column="1">
          <widget class="QCheckBox" name="ScrLogScsChk">
+          <property name="toolTip">
+           <string>筛选SUCCESS等级Log</string>
+          </property>
           <property name="text">
            <string>SUCCESS</string>
           </property>
@@ -625,6 +631,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="1" column="1">
          <widget class="QCheckBox" name="ScrLogErrChk">
+          <property name="toolTip">
+           <string>筛选ERROR等级Log</string>
+          </property>
           <property name="text">
            <string>ERROR</string>
           </property>
@@ -632,6 +641,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="6" column="1">
          <widget class="QCheckBox" name="ScrLogTrChk">
+          <property name="toolTip">
+           <string>筛选TRACE等级Log</string>
+          </property>
           <property name="text">
            <string>TRACE</string>
           </property>
@@ -639,6 +651,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="7" column="1">
          <widget class="QCheckBox" name="ScrLogAllChk">
+          <property name="toolTip">
+           <string>筛选所有等级Log</string>
+          </property>
           <property name="text">
            <string>ALL</string>
           </property>
@@ -646,6 +661,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="0" column="1">
          <widget class="QCheckBox" name="ScrLogCrtChk">
+          <property name="toolTip">
+           <string>筛选CRITICAL等级Log</string>
+          </property>
           <property name="text">
            <string>CRITICAL</string>
           </property>
@@ -653,6 +671,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="4" column="1">
          <widget class="QCheckBox" name="ScrLogInfChk">
+          <property name="toolTip">
+           <string>筛选INFO等级Log</string>
+          </property>
           <property name="text">
            <string>INFO</string>
           </property>
@@ -660,6 +681,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="5" column="1">
          <widget class="QCheckBox" name="ScrLogDbgChk">
+          <property name="toolTip">
+           <string>筛选DEBUG等级Log</string>
+          </property>
           <property name="text">
            <string>DEBUG</string>
           </property>
@@ -701,6 +725,9 @@ p, li { white-space: pre-wrap; }
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QPushButton" name="LoadLogPb">
+          <property name="toolTip">
+           <string>加载Log文件</string>
+          </property>
           <property name="text">
            <string>加载</string>
           </property>
@@ -708,6 +735,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item>
          <widget class="QPushButton" name="ClrLogPb">
+          <property name="toolTip">
+           <string>清空Log缓存</string>
+          </property>
           <property name="text">
            <string>清空</string>
           </property>
