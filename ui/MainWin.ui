@@ -724,7 +724,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPushButton" name="LoadLogPb">
+         <widget class="QPushButton" name="LdLogPb">
           <property name="toolTip">
            <string>加载Log文件</string>
           </property>

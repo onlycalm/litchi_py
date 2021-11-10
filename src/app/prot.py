@@ -127,7 +127,6 @@ class cStrFmtLogProt:
     def __init__(self):
         LogTr("Enter cStrFmtLogProt.__init__().")
         self.Lv = ("CRITICAL", "ERROR", "WARNING", "SUCCESS", "INFO", "DEBUG", "TRACE")
-        pass
         LogTr("Exit cStrFmtLogProt.__init__().")
 
     ##

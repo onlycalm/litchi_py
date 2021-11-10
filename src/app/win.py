@@ -98,6 +98,7 @@ class cMainWin(QObject):
         self.MainWin.ScrLogTrChk.clicked.connect(self.ClkScrLogTr)
         self.MainWin.ScrLogAllChk.clicked.connect(self.ClkScrLogAll)
         self.MainWin.ClrLogPb.clicked.connect(self.ClkClrLog)
+        self.MainWin.LdLogPb.clicked.connect(self.ClkLdLog)
 
         self.Tmr.start(100)
         self.Thd.Strt()
@@ -201,9 +202,9 @@ class cMainWin(QObject):
         Tm = QDateTime.currentDateTime()
         FmtTm = Tm.toString('yyMMdd-hhmmss')
         FDlg = QFileDialog(self.MainWin)
-        Fpth = FDlg.getSaveFileName(self.MainWin, "保存文件", FmtTm + ".txt")
-        if Fpth[0] != '':
-            F = open(Fpth[0], 'w')
+        FPth = FDlg.getSaveFileName(self.MainWin, "保存文件", FmtTm + ".txt")
+        if FPth[0] != "":
+            F = open(FPth[0], 'w')
             F.write(self.MainWin.RecvTb.toPlainText());
             F.close()
         LogTr("Exit cMainWin.ClkSvRecv().")
@@ -446,6 +447,23 @@ class cMainWin(QObject):
                 self.MainWin.ScrLogTrChk.setChecked(False)
 
         LogTr("Exit cMainWin.ClkScrLogAll().")
+
+    ##
+    # @brief 加载Log点击事件。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def ClkLdLog(self):
+        LogTr("Enter cMainWin.ClkLdLog().")
+        FDlg = QFileDialog(self.MainWin)
+        FPth = FDlg.getOpenFileName(self.MainWin, "加载Log")
+        if FPth[0] != "":
+            self.ClkClrLog()
+            self.LogVw.LdLog(FPth[0])
+        LogTr("Exit cMainWin.ClkLdLog().")
 
     ##
     # @brief 清空Log点击事件。

@@ -13,6 +13,7 @@ from PySide2.QtWidgets import QTableWidgetItem
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QColor
 from log import *
+from re import *
 
 ##
 # @class cLogVw
@@ -236,3 +237,42 @@ class cLogVw:
         elif Lv == "SUCCESS":
             self.LvCnt["SUCCESS"] += 1
         LogTr("Exit cLogVw.CntLog().")
+
+    ##
+    # @brief 从文件加载Log记录。
+    # @details 无
+    # @param self 对象指针。
+    # @param FFlPth 文件全路径，类型为字符串。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def LdLog(self, FFlPth):
+        F = open(FFlPth, 'rb')
+        LnStr = F.readline().decode("Gbk")
+        self.Clr()
+
+        while LnStr:
+            MtchRes = match("(\d{4})-(0[1-9]|1[0-2])-(3[0-1]|0[1-9]|[1-2][0-9]) " +
+                            "(0[1-9]|1[0-9]|2[0-4]):(0[1-9]|[1-5][0-9]|60):" +
+                            "(0[1-9]|[1-5][0-9]|60).(\d{3}) (\[INFO\]) (\w+):" +
+                            "(\w+):(\w+) - \[(CRITICAL|ERROR|WARNING|SUCCESS" +
+                            "|INFO|DEBUG|TRACE)\] ", LnStr)
+            if MtchRes:
+                SrchRes = search("(\d{4})-(0[1-9]|1[0-2])-(3[0-1]|0[1-9]|[1-2][0-9]) " +
+                                 "(0[1-9]|1[0-9]|2[0-4]):(0[1-9]|[1-5][0-9]|60):" +
+                                 "(0[1-9]|[1-5][0-9]|60).(\d{3})", LnStr)
+                Idx = SrchRes.span()
+                LogDate = LnStr[Idx[0]:Idx[1]]
+                SrchRes = search("- \[(CRITICAL|ERROR|WARNING|SUCCESS|INFO|DEBUG|" +
+                                 "TRACE)\]", LnStr)
+                Idx = SrchRes.span()
+                LogLv = LnStr[Idx[0] + 3:Idx[1] - 1]
+                LogDes = LnStr[Idx[1] + 1:-1]
+                self.ApdRec([LogLv, LogDate, LogDes])
+                self.HlLogLv(self.GetRowAmt() - 1, 0, LogLv)
+                self.CntLog(LogLv)
+
+            LnStr = F.readline().decode("Gbk")
+
+        F.close()
