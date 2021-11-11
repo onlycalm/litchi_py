@@ -276,3 +276,22 @@ class cLogVw:
             LnStr = F.readline().decode("Gbk")
 
         F.close()
+
+    ##
+    # @brief 筛选Log记录。
+    # @details 无
+    # @param self 对象指针。
+    # @param 筛选Log等级，类型为列表。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def FltLog(self, Flt):
+        for n in range(self.GetRowAmt()):
+            LogLv = self.GetCell(n, 0)
+
+            if LogLv in Flt:
+                self.Tw.setRowHidden(n, False)
+            else:
+                self.Tw.setRowHidden(n, True)
+

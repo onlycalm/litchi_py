@@ -202,7 +202,7 @@ class cMainWin(QObject):
         Tm = QDateTime.currentDateTime()
         FmtTm = Tm.toString('yyMMdd-hhmmss')
         FDlg = QFileDialog(self.MainWin)
-        FPth = FDlg.getSaveFileName(self.MainWin, "保存文件", FmtTm + ".txt")
+        FPth = FDlg.getSaveFileName(self.MainWin, "保存文件", FmtTm + ".txt", filter = "*.txt")
         if FPth[0] != "":
             F = open(FPth[0], 'w')
             F.write(self.MainWin.RecvTb.toPlainText());
@@ -308,6 +308,7 @@ class cMainWin(QObject):
         else:
             self.MainWin.ScrLogAllChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogCrt().")
 
     ##
@@ -326,6 +327,7 @@ class cMainWin(QObject):
         else:
             self.MainWin.ScrLogAllChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogErr().")
 
     ##
@@ -344,6 +346,7 @@ class cMainWin(QObject):
         else:
             self.MainWin.ScrLogAllChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogWrn().")
 
     ##
@@ -362,6 +365,7 @@ class cMainWin(QObject):
         else:
             self.MainWin.ScrLogAllChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogScs().")
 
     ##
@@ -380,6 +384,7 @@ class cMainWin(QObject):
         else:
             self.MainWin.ScrLogAllChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogInf().")
 
     ##
@@ -398,6 +403,7 @@ class cMainWin(QObject):
         else:
             self.MainWin.ScrLogAllChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogDbg().")
 
     ##
@@ -416,6 +422,7 @@ class cMainWin(QObject):
         else:
             self.MainWin.ScrLogAllChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogTr().")
 
     ##
@@ -446,6 +453,7 @@ class cMainWin(QObject):
                 self.MainWin.ScrLogDbgChk.setChecked(False)
                 self.MainWin.ScrLogTrChk.setChecked(False)
 
+        self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogAll().")
 
     ##
@@ -459,7 +467,7 @@ class cMainWin(QObject):
     def ClkLdLog(self):
         LogTr("Enter cMainWin.ClkLdLog().")
         FDlg = QFileDialog(self.MainWin)
-        FPth = FDlg.getOpenFileName(self.MainWin, "加载Log")
+        FPth = FDlg.getOpenFileName(self.MainWin, "加载Log", filter = "*.log")
         if FPth[0] != "":
             self.ClkClrLog()
             self.LogVw.LdLog(FPth[0])
@@ -668,3 +676,38 @@ class cMainWin(QObject):
         ScrBar = self.MainWin.RecvTb.verticalScrollBar()
         ScrBar.setValue(ScrBar.maximum())
         LogTr("Exit cMainWin.RfrRecvTb().")
+
+    ##
+    # @brief 对LogVw进行Log筛选。
+    # @details 无
+    # @param self 对象指针。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def FltLog(self):
+        LogTr("Enter cMainWin.FltLogLv().")
+        SelLogLv = []
+        if self.MainWin.ScrLogCrtChk.isChecked():
+            SelLogLv.append("CRITICAL")
+
+        if self.MainWin.ScrLogErrChk.isChecked():
+            SelLogLv.append("ERROR")
+
+        if self.MainWin.ScrLogWrnChk.isChecked():
+            SelLogLv.append("WARNING")
+
+        if self.MainWin.ScrLogScsChk.isChecked():
+            SelLogLv.append("SUCCESS")
+
+        if self.MainWin.ScrLogInfChk.isChecked():
+            SelLogLv.append("INFO")
+
+        if self.MainWin.ScrLogDbgChk.isChecked():
+            SelLogLv.append("DEBUG")
+
+        if self.MainWin.ScrLogTrChk.isChecked():
+            SelLogLv.append("TRACE")
+
+        self.LogVw.FltLog(SelLogLv)
+        LogTr("Exit cMainWin.FltLogLv().")
