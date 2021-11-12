@@ -436,22 +436,10 @@ class cMainWin(QObject):
     def ClkScrLogAll(self):
         LogTr("Enter cMainWin.ClkScrLogAll().")
         if self.MainWin.ScrLogAllChk.isChecked():
-            self.MainWin.ScrLogCrtChk.setChecked(True)
-            self.MainWin.ScrLogErrChk.setChecked(True)
-            self.MainWin.ScrLogWrnChk.setChecked(True)
-            self.MainWin.ScrLogScsChk.setChecked(True)
-            self.MainWin.ScrLogInfChk.setChecked(True)
-            self.MainWin.ScrLogDbgChk.setChecked(True)
-            self.MainWin.ScrLogTrChk.setChecked(True)
+            self.SelAllScrLogChk(True)
         else:
             if self.IsSelAllScrLogChk():
-                self.MainWin.ScrLogCrtChk.setChecked(False)
-                self.MainWin.ScrLogErrChk.setChecked(False)
-                self.MainWin.ScrLogWrnChk.setChecked(False)
-                self.MainWin.ScrLogScsChk.setChecked(False)
-                self.MainWin.ScrLogInfChk.setChecked(False)
-                self.MainWin.ScrLogDbgChk.setChecked(False)
-                self.MainWin.ScrLogTrChk.setChecked(False)
+                self.SelAllScrLogChk(False)
 
         self.FltLog()
         LogTr("Exit cMainWin.ClkScrLogAll().")
@@ -469,6 +457,7 @@ class cMainWin(QObject):
         FDlg = QFileDialog(self.MainWin)
         FPth = FDlg.getOpenFileName(self.MainWin, "加载Log", filter = "*.log")
         if FPth[0] != "":
+            self.SelAllScrLogChk(True)
             self.ClkClrLog()
             self.LogVw.LdLog(FPth[0])
         LogTr("Exit cMainWin.ClkLdLog().")
@@ -512,6 +501,34 @@ class cMainWin(QObject):
 
         LogTr("Exit cMainWin.IsSelAllScrLogChk().")
         return Rtn
+
+    ##
+    # @brief 选中了所有筛选Log复选框。
+    # @details 无
+    # @param 无
+    # @return 是否全选。
+    # @note 无
+    # @attention 无
+    #
+    def SelAllScrLogChk(self, Sw):
+        if Sw:
+            self.MainWin.ScrLogCrtChk.setChecked(True)
+            self.MainWin.ScrLogErrChk.setChecked(True)
+            self.MainWin.ScrLogWrnChk.setChecked(True)
+            self.MainWin.ScrLogScsChk.setChecked(True)
+            self.MainWin.ScrLogInfChk.setChecked(True)
+            self.MainWin.ScrLogDbgChk.setChecked(True)
+            self.MainWin.ScrLogTrChk.setChecked(True)
+            self.MainWin.ScrLogAllChk.setChecked(True)
+        else:
+            self.MainWin.ScrLogCrtChk.setChecked(False)
+            self.MainWin.ScrLogErrChk.setChecked(False)
+            self.MainWin.ScrLogWrnChk.setChecked(False)
+            self.MainWin.ScrLogScsChk.setChecked(False)
+            self.MainWin.ScrLogInfChk.setChecked(False)
+            self.MainWin.ScrLogDbgChk.setChecked(False)
+            self.MainWin.ScrLogTrChk.setChecked(False)
+            self.MainWin.ScrLogAllChk.setChecked(False)
 
     ##
     # @brief 辅助线程回调函数。
