@@ -51,6 +51,18 @@ class cDetVw:
         LogTr("Exit cDetVw.ApdRec().")
 
     ##
+    # @brief 添加一条子检测记录。
+    # @details 往DetVw控件中添加一条子检测记录。
+    # @param self 对象指针。
+    # @param Rec 一条Det记录，类型为列表。
+    # @return 无
+    # @note 无
+    # @attention 无
+    #
+    def ApdSubLvRec(self):
+        pass
+
+    ##
     # @brief 清空Det记录。
     # @details 无
     # @param self 对象指针。

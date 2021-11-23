@@ -422,14 +422,6 @@ p, li { white-space: pre-wrap; }
       </attribute>
       <column>
        <property name="text">
-        <string>序号</string>
-       </property>
-       <property name="textAlignment">
-        <set>AlignCenter</set>
-       </property>
-      </column>
-      <column>
-       <property name="text">
         <string>项目</string>
        </property>
        <property name="textAlignment">

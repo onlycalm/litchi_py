@@ -74,6 +74,15 @@ class cMainWin(QObject):
         self.MainWin.statusbar.addWidget(self.ScsLed.Lbl)
         self.MainWin.statusbar.setSizeGripEnabled(False)                       #取消窗口右下角三角符。
         self.MainWin.setFixedSize(self.MainWin.width(), self.MainWin.height()) #禁用窗口拉伸及最大化按钮。
+        self.Root = QTreeWidgetItem()
+        self.Child = QTreeWidgetItem()
+        self.Child1 = QTreeWidgetItem()
+        self.Root.setText(0, "父节点")
+        self.Child.setText(0, "子节点")
+        self.Child1.setText(0, "子节点")
+        self.Root.addChild(self.Child)
+        self.Child.addChild(self.Child1)
+        self.DetVw.Tw.addTopLevelItem(self.Root)
         self.LogVw.SetSelBgClr("grey")
         self.MainWin.GrphVl.addWidget(self.Osc.Pw)
         self.RfrCom()
